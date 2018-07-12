@@ -1,3 +1,9 @@
+# v1.0.2
+
+Third release. 12 July 2018.
+
+- Improved test coverage and documentation.
+
 # v1.0.1
 
 Second release. 12 July 2018.
