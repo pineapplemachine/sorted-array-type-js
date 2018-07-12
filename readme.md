@@ -1,13 +1,16 @@
 # SortedArray
 
-This package implements a **SortedArray** type,
-which is an array whose contents are always sorted.
-It supports all standard ES6 Array methods and it
-provides additional methods for inserting elements
-in a sorted order.
+This package implements a **SortedArray** type, which is an array
+whose contents are always sorted.
+It supports all standard ES6 Array methods and it provides
+additional methods for inserting elements in a sorted order.
 
 The package is licensed according to the permissive
 [zlib/libpng license](LICENSE).
+
+Note that the SortedArray type uses the native `Array.sort`
+method for some functionality, meaning that sort stability
+will depend on the platform.
 
 ## Installation
 
