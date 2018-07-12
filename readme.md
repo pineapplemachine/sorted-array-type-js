@@ -111,7 +111,7 @@ sortedArray.pop(); // Remove and return the last element in the array.
 sortedArray.push(); // Append a new element to the end of the array. [!]
 sortedArray.reduce(); // Reduce the array.
 sortedArray.reduceRight(); // Reduce the array, backwards.
-sortedArray.reverse(); // Reverse the array and permanently invert its sort order.
+sortedArray.reverse(); // Reverse and permanently invert sort order.
 sortedArray.shift(); // Remove and return the first element in the array.
 sortedArray.slice(); // Get a slice as another SortedArray.
 sortedArray.some(); // True if any element matches a predicate.
