@@ -483,12 +483,12 @@ function testSortedArray(SortedArray){
         assert.equal(array.length, 0);
     });
     canary.test("slice", function(){
-        const array = new SortedArray([1, 2, 3, 4]);
+        const array = new SortedArray([4, 3, 2, 1], (a, b) => b - a);
         const slice = array.slice(1, 3);
         assert(slice instanceof SortedArray);
-        assertArray(slice, [2, 3]);
+        assertArray(slice, [3, 2]);
         slice.insert(6);
-        assertArray(slice, [2, 3, 6]);
+        assertArray(slice, [6, 3, 2]);
     });
     canary.test("some", function(){
         const array = new SortedArray([1, 2, 3, 4]);
@@ -503,12 +503,12 @@ function testSortedArray(SortedArray){
         assertArray(array, [6, 5, 4, 3, 2, 1]);
     });
     canary.test("splice", function(){
-        const array = new SortedArray([1, 2, 3, 4]);
+        const array = new SortedArray([4, 3, 2, 1], (a, b) => b - a);
         const splice = array.splice(1, 2);
         assert(splice instanceof SortedArray);
-        assertArray(splice, [2, 3]);
+        assertArray(splice, [3, 2]);
         splice.insert(6);
-        assertArray(splice, [2, 3, 6]);
+        assertArray(splice, [6, 3, 2]);
     });
     canary.test("toLocaleString", function(){
         const array = new SortedArray([1, 2, 3]);

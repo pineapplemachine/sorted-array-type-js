@@ -224,7 +224,7 @@ class SortedArray extends Array{
         }
     }
     // Get a slice out of the array. Returns a SortedArray.
-    slice(begin, end){
+    slice(){
         const slice = Array.prototype.slice.apply(this, arguments);
         slice.comparator = this.comparator;
         slice.reversedComparator = this.reversedComparator;
@@ -239,9 +239,16 @@ class SortedArray extends Array{
         this.reversedComparator = null;
         super.sort(comparator);
     }
+    // Remove and/or insert elements in the array.
+    splice(){
+        const splice = Array.prototype.splice.apply(this, arguments);
+        splice.comparator = this.comparator;
+        splice.reversedComparator = this.reversedComparator;
+        return splice;
+    }
     
     // Can these be done in a less hacky way?
-    concat(...values){
+    concat(){
         this.constructor = Array;
         const array = Array.prototype.concat.apply(this, arguments);
         this.constructor = SortedArray;
@@ -259,7 +266,7 @@ class SortedArray extends Array{
         this.constructor = SortedArray;
         return array;
     }
-    map(transform, thisArg){
+    map(){
         this.constructor = Array;
         const array = Array.prototype.map.apply(this, arguments);
         this.constructor = SortedArray;
