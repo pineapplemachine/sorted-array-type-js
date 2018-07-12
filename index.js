@@ -205,7 +205,7 @@ class SortedArray extends Array{
         const array = new SortedArray(null, this.comparator);
         array.reversedComparator = this.reversedComparator;
         for(let element of this){
-            if(predicate(element)) array.push(element);
+            if(predicate(element)) Array.prototype.push.call(array, element);
         }
         return array;
     }

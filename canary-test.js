@@ -384,12 +384,19 @@ function testSortedArray(SortedArray){
         assertArray(array, [0, 0, 0]);
     });
     canary.test("filter", function(){
+        // Test with a default comparator
         const array = new SortedArray([1, 2, 3, 4, 5, 6]);
         const even = array.filter(n => n % 2 === 0);
         assert(even instanceof SortedArray);
         assertArray(even, [2, 4, 6]);
         even.insert(3);
         assertArray(even, [2, 3, 4, 6]);
+        // Also test with a custom comparator
+        const back = new SortedArray([3, 2, 1], (a, b) => b - a);
+        const odd = back.filter(n => n % 2);
+        assertArray(odd, [3, 1]);
+        odd.insert(0);
+        assertArray(odd, [3, 1, 0]);
     });
     canary.test("find", function(){
         const array = new SortedArray([1, 2, 3, 4]);
