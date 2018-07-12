@@ -540,6 +540,15 @@ function testSortedArray(SortedArray){
         assert.equal(count, 3);
     });
     
+    canary.test("valueOf", function(){
+        const array = new SortedArray([3, 1, 2]);
+        assert.equal(array.valueOf(), array);
+    });
+    canary.test("JSON.stringify", function(){
+        const array = new SortedArray([3, 1, 2]);
+        assert.equal(JSON.stringify(array), "[1,2,3]");
+    });
+    
     return canary;
 }
 
