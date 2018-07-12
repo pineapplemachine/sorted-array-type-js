@@ -93,6 +93,11 @@ no matter how they are used or what inputs they are given.
 This includes the `sort` and `reverse` methods, which cause later
 insertions to use the same new ordering.
 
+Methods like `indexOf` or `remove` which involve comparisons for finding
+an exact element in the array all use
+[SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+for comparisons.
+
 ``` js
 sortedArray.concat(); // Returns a new, concatenated Array.
 sortedArray.copyWithin(); // Copies elements. [!]
