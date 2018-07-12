@@ -4,6 +4,7 @@ This package implements a **SortedArray** type, which is an array
 whose contents are always sorted.
 It supports all standard ES6 Array methods and it provides
 additional methods for inserting elements in a sorted order.
+It fully supports indexing, enumeration, and a length property.
 
 The package is licensed according to the permissive
 [zlib/libpng license](LICENSE).
@@ -144,6 +145,7 @@ Use these tools with care!
 ``` js
 // USE WITH CAUTION!
 sortedArray[0] = x;
+sortedArray.length = x;
 sortedArray.push(x);
 sortedArray.unshift(x);
 sortedArray.splice(0, 0, x);
