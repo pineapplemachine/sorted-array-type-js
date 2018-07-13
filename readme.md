@@ -158,7 +158,7 @@ sortedArray.sort(); // Re-sort and update the array with a new comparator.
 sortedArray.splice(); // Remove and/or insert elements in the array. [!]
 sortedArray.toLocaleString(); // Get a localized string representation.
 sortedArray.toString(); // Get a string representation of the array.
-sortedArray.unshift(); // Prepend value to the beginning of the array. [!]
+sortedArray.unshift(); // Prepend value to the start of the array. [!]
 sortedArray.values(); // Returns an iterator of values in the array.
 ```
 
