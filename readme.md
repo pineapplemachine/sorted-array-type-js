@@ -19,8 +19,8 @@ and insertion operations will also be stable.
 
 ``` js
 const sortedArray = new SortedArray(["alice", "carl", "bob"]);
-sortedArray.length; // 3
 sortedArray[1]; // "bob"
+sortedArray.length; // 3
 sortedArray.insert("beatrice"); // ["alice", "beatrice", "bob", "carl"]
 sortedArray.indexOf("bob"); // 2 (uses binary search)
 sortedArray.pop(); // "carl"
@@ -58,12 +58,12 @@ native JavaScript `<` and `>` comparisons to sort elements
 in ascending order.
 
 ``` js
-sortedArray = new SortedArray();                                    // []
-sortedArray = new SortedArray([3, 1, 2]);                           // [1, 2, 3]
-sortedArray = new SortedArray([3, 1, 2], (a, b) => b - a);          // [3, 2, 1]
-sortedArray = SortedArray.of(1, 3, 2);                              // [1, 2, 3]
-sortedArray = SortedArray.from([1, 3, 2]);                          // [1, 2, 3]
-sortedArray = SortedArray.from([1, 3, 2], (a, b) => b - a);         // [3, 2, 1]
+array = new SortedArray();                                    // []
+array = new SortedArray([3, 1, 2]);                           // [1, 2, 3]
+array = new SortedArray([3, 1, 2], (a, b) => b - a);          // [3, 2, 1]
+array = SortedArray.of(1, 3, 2);                              // [1, 2, 3]
+array = SortedArray.from([1, 3, 2]);                          // [1, 2, 3]
+array = SortedArray.from([1, 3, 2], (a, b) => b - a);         // [3, 2, 1]
 ```
 
 There are also `ofSorted` and `fromSorted` class methods for constructing
@@ -72,9 +72,9 @@ Passing values to these methods that are not correctly sorted will
 cause the SortedArray to behave incorrectly, so use them with care!
 
 ``` js
-sortedArray = SortedArray.ofSorted(1, 2, 3);                        // [1, 2, 3]
-sortedArray = SortedArray.fromSorted([1, 2, 3]);                    // [1, 2, 3]
-sortedArray = SortedArray.fromSorted([3, 2, 1], (a, b) => b - a);   // [3, 2, 1]
+array = SortedArray.ofSorted(1, 2, 3);                        // [1, 2, 3]
+array = SortedArray.fromSorted([1, 2, 3]);                    // [1, 2, 3]
+array = SortedArray.fromSorted([3, 2, 1], (a, b) => b - a);   // [3, 2, 1]
 ```
 
 SortedArrays have a `length` property and can be indexed and enumerated
@@ -104,7 +104,7 @@ will cause the SortedArray to behave incorrectly, so use it with care!
 ``` js
 sortedArray = new SortedArray();
 sortedArray.insert(1); // Insert 1. Returns the new length of the array.
-sortedArray.remove(1); // Remove 1. Returns true if the value was in the array.
+sortedArray.remove(1); // Remove 1. True if the value was in the array.
 sortedArray.insertSorted([1, 2, 3, 4]); // Insert already-sorted values.
 ```
 
@@ -141,10 +141,10 @@ sortedArray.flat(); // Returns a flattened Array.
 sortedArray.flatMap(); // Returns a flattened mapped Array.
 sortedArray.forEach(); // Invokes for every element in the array.
 sortedArray.includes(); // True when a value is in the array. [%]
-sortedArray.indexOf(); // First index of a value, or -1 if not present. [%]
+sortedArray.indexOf(); // First index of value, or -1 if not present. [%]
 sortedArray.join(); // Join elements to produce a string.
 sortedArray.keys(); // Returns an iterator of indexes in the array.
-sortedArray.lastIndexOf(); // Last index of a value, or -1 if not present. [%]
+sortedArray.lastIndexOf(); // Last index of value; -1 if not present. [%]
 sortedArray.map(); // Map elements in the array to produce a new Array.
 sortedArray.pop(); // Remove and return the last element in the array.
 sortedArray.push(); // Append a new element to the end of the array. [!]
@@ -154,11 +154,11 @@ sortedArray.reverse(); // Reverse and permanently invert sort order.
 sortedArray.shift(); // Remove and return the first element in the array.
 sortedArray.slice(); // Get a slice as another SortedArray.
 sortedArray.some(); // True if any element matches a predicate.
-sortedArray.sort(); // Re-sort and update the array with a different comparator.
+sortedArray.sort(); // Re-sort and update the array with a new comparator.
 sortedArray.splice(); // Remove and/or insert elements in the array. [!]
 sortedArray.toLocaleString(); // Get a localized string representation.
 sortedArray.toString(); // Get a string representation of the array.
-sortedArray.unshift(); // Prepend a value to the beginning of the array. [!]
+sortedArray.unshift(); // Prepend value to the beginning of the array. [!]
 sortedArray.values(); // Returns an iterator of values in the array.
 ```
 
