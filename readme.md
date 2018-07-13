@@ -15,6 +15,16 @@ Note that the SortedArray type uses the native `Array.sort`
 method for some functionality, meaning that sort stability
 will depend on the platform.
 
+``` js
+const sortedArray = new SortedArray(["alice", "carl", "bob"]);
+sortedArray.length; // 3
+sortedArray[1]; // "bob"
+sortedArray.insert("beatrice"); // ["alice", "beatrice", "bob", "carl"]
+sortedArray.indexOf("bob"); // 2 (uses binary search)
+sortedArray.pop(); // "carl"
+sortedArray.slice(0, 2); // SortedArray(["alice", "beatrice"])
+```
+
 [license-image]: https://img.shields.io/badge/License-Zlib-lightgrey.svg
 [license]: https://github.com/pineapplemachine/sorted-array-type-js/blob/master/LICENSE
 
