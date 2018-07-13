@@ -2,9 +2,11 @@
 
 Fourth release. 13 July 2018.
 
-- Add `new SortedArray(comparator)` constructor.
-- Stable `Array.sort` should now guarantee SortedArray stability.
 - Renamed `insertionIndexOf` to `firstInsertionIndexOf`.
+- Add `new SortedArray(comparator)` constructor.
+- More optimized `insertSorted` implementation.
+- Stable `Array.sort` should now guarantee SortedArray stability.
+- Achieve 100% test coverage.
 
 # v1.0.2
 
