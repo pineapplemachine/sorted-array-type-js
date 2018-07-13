@@ -341,6 +341,25 @@ function testSortedArray(SortedArray){
             assert.equal(array.indexOf(2, -3), 1);
             assert.equal(array.indexOf(2, -10), 1);
         });
+        this.test("indexOf values with the same sort order", function(){
+            const array = new SortedArray((a, b) => a.n - b.n);
+            const objects = [
+                {str: "a", n: 1},
+                {str: "b", n: 1},
+                {str: "c", n: 1},
+                {str: "d", n: 2},
+                {str: "e", n: 2},
+                {str: "f", n: 2},
+            ];
+            array.insertSorted(objects);
+            assert.deepEqual(array.map(i => i), objects);
+            assert.equal(array.indexOf(objects[0]), 0);
+            assert.equal(array.indexOf(objects[1]), 1);
+            assert.equal(array.indexOf(objects[2]), 2);
+            assert.equal(array.indexOf(objects[3]), 3);
+            assert.equal(array.indexOf(objects[4]), 4);
+            assert.equal(array.indexOf(objects[5]), 5);
+        });
     });
     canary.group("lastIndexOf", function(){
         this.test("lastIndexOf", function(){
@@ -377,6 +396,25 @@ function testSortedArray(SortedArray){
             assert.equal(array.lastIndexOf(2, -3), 1);
             assert.equal(array.lastIndexOf(2, -4), -1);
             assert.equal(array.lastIndexOf(2, -10), -1);
+        });
+        this.test("lastIndexOf values with the same sort order", function(){
+            const array = new SortedArray((a, b) => a.n - b.n);
+            const objects = [
+                {str: "a", n: 1},
+                {str: "b", n: 1},
+                {str: "c", n: 1},
+                {str: "d", n: 2},
+                {str: "e", n: 2},
+                {str: "f", n: 2},
+            ];
+            array.insertSorted(objects);
+            assert.deepEqual(array.map(i => i), objects);
+            assert.equal(array.lastIndexOf(objects[0]), 0);
+            assert.equal(array.lastIndexOf(objects[1]), 1);
+            assert.equal(array.lastIndexOf(objects[2]), 2);
+            assert.equal(array.lastIndexOf(objects[3]), 3);
+            assert.equal(array.lastIndexOf(objects[4]), 4);
+            assert.equal(array.lastIndexOf(objects[5]), 5);
         });
     });
     
