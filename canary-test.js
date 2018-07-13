@@ -82,6 +82,10 @@ function testSortedArray(SortedArray){
             assert.equal(array.length, 3);
             assertArray(array, [1, 2, 3]);
         });
+        this.test("values from \"arguments\"", function(){
+            const func = function(){return new SortedArray(arguments);};
+            assertArray(func(3, 1, 4, 2), [1, 2, 3, 4]);
+        });
         this.test("values from other SortedList", function(){
             const a = new SortedArray([1, 2, 3, 4]);
             assertArray(new SortedArray(a), [1, 2, 3, 4]);

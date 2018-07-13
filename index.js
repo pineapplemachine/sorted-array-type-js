@@ -14,42 +14,53 @@ class SortedArray extends Array{
     // Construct a new SortedArray. Uses Array.sort to sort
     // the input collection, if any; the sort may be unstable.
     constructor(values, comparator){
-        comparator = comparator || DefaultComparator;
-        if(typeof(comparator) !== "function"){
+        let useComparator = comparator || DefaultComparator;
+        let useReversedComparator = null;
+        if(typeof(useComparator) !== "function"){
             // Verify comparator input
             throw new TypeError("Comparator must be a function.");
-        }else if(Number.isInteger(values) && values >= 0){
-            // Support an Array(length) constructor because
-            // inherited methods may break otherwise (e.g. splice)
+        }
+        // new SortedArray(length, cmp?) - needed by some inherited methods
+        if(Number.isInteger(values) && values >= 0){
             super(values);
-        }else if(values instanceof SortedArray && values.comparator === comparator){
-            // SortedArray with an identical comparator
+        // new SortedArray(SortedArray, cmp?) - same or unspecified comparator
+        }else if(values instanceof SortedArray && (
+            !comparator || values.comparator === useComparator
+        )){
             super();
             super.push(...values);
+            useComparator = values.comparator;
+            useReversedComparator = values.reversedComparator;
+        // new SortedArray(Array, cmp?)
         }else if(Array.isArray(values)){
-            // Any old array
             super();
             super.push(...values);
-            super.sort(comparator);
+            super.sort(useComparator);
+        // new SortedArray(iterable, cmp?)
         }else if(values && typeof(values[Symbol.iterator]) === "function"){
-            // Other iterables
             super();
             for(let value of values) super.push(value);
-            super.sort(comparator);
-        }else if(values && Number.isFinite(values.length)){
-            // Not solid on the usefulness of this, but Array.from supports it
+            super.sort(useComparator);
+        // new SortedArray(comparator)
+        }else if(typeof(values) === "function" && arguments.length === 1){
+            super();
+            useComparator = values;
+        // new SortedArray(object with length, cmp?) - support e.g. `arguments`
+        }else if(values && typeof(values) === "object" &&
+            Number.isFinite(values.length)
+        ){
             super();
             for(let i = 0; i < values.length; i++) super.push(values[i]);
-            super.sort(comparator);
+            super.sort(useComparator);
+        // new SortedArray(???)
         }else if(values){
-            // Error (value is non-nil, not numeric, and not iterable.)
             throw new TypeError("Unhandled input type. Expected an iterable.");
+        // new SortedArray()
         }else{
-            // Initialize as an empty array
             super();
         }
-        this.comparator = comparator;
-        this.reversedComparator = null;
+        this.comparator = useComparator;
+        this.reversedComparator = useReversedComparator;
     }
     // Construct a SortedArray with elements given as arguments.
     static of(...values){
