@@ -1,9 +1,11 @@
 # SortedArray
 
+[![MIT License][license-image]][license] [![Build Status][travis-image]][travis-url] [![NPM version][npm-version-image]][npm-url]
+
 This package implements a **SortedArray** type, which is an array
 whose contents are always sorted.
 It supports all standard ES6 Array methods and it provides
-additional methods for inserting elements in a sorted order.
+additional methods relating to keeping elements in a sorted order.
 It fully supports indexing, enumeration, and a length property.
 
 The package is licensed according to the permissive
@@ -12,6 +14,15 @@ The package is licensed according to the permissive
 Note that the SortedArray type uses the native `Array.sort`
 method for some functionality, meaning that sort stability
 will depend on the platform.
+
+[license-image]: https://img.shields.io/badge/License-Zlib-lightgrey.svg
+[license]: https://github.com/pineapplemachine/sorted-array-type-js/blob/master/LICENSE
+
+[travis-url]: https://travis-ci.org/pineapplemachine/sorted-array-type-js
+[travis-image]: https://travis-ci.org/pineapplemachine/sorted-array-type-js.svg?branch=master
+
+[npm-url]: https://www.npmjs.com/package/sorted-array-type
+[npm-version-image]: https://badge.fury.io/js/sorted-array-type.svg
 
 ## Installation
 
@@ -72,10 +83,17 @@ You should not normally `push` to a SortedArray, and you should
 consider using `remove` to be better practice than using `indexOf`
 and `slice`, though both options will work.
 
+There is also an `insertSorted` method, which can be used to efficiently
+insert the contents of another iterable which is already sorted according
+to the same comparison function.
+Passing iterables to the `insertSorted` method that are not correctly sorted
+will cause the SortedArray to behave incorrectly, so use it with care!
+
 ``` js
 sortedArray = new SortedArray();
 sortedArray.insert(1); // Insert 1. Returns the new length of the array.
 sortedArray.remove(1); // Remove 1. Returns true if the value was in the array.
+sortedArray.insertSorted([1, 2, 3, 4]); // Insert already-sorted values.
 ```
 
 SortedArrays support all of the standard ES6 Array methods and
@@ -91,7 +109,7 @@ All methods not marked with a **[!]** can be used safely; they should
 never invalidate a SortedArray's guarantee of correct ordering,
 no matter how they are used or what inputs they are given.
 This includes the `sort` and `reverse` methods, which cause later
-insertions to use the same new ordering.
+operations to use the same new ordering.
 
 Methods like `indexOf` or `remove` which involve comparisons for finding
 an exact element in the array all use
