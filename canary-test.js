@@ -82,9 +82,13 @@ function testSortedArray(SortedArray){
             assert.equal(array.length, 3);
             assertArray(array, [1, 2, 3]);
         });
-        this.test("values from array-like object", function(){
+        this.test("values from \"arguments\" object", function(){
             const func = function(){return new SortedArray(arguments);};
             assertArray(func(3, 1, 4, 2), [1, 2, 3, 4]);
+        });
+        this.test("values from array-like object", function(){
+            const array = new SortedArray({length: 3, 0: 1, 1: 2, 2: 3});
+            assertArray(array, [1, 2, 3]);
         });
         this.test("values from other SortedList", function(){
             const a = new SortedArray([1, 2, 3, 4]);
@@ -166,7 +170,14 @@ function testSortedArray(SortedArray){
         });
         this.test("insertSorted empty input", function(){
             const array = new SortedArray([1, 2, 3]);
+            // Empty array
             array.insertSorted([]);
+            assertArray(array, [1, 2, 3]);
+            // Empty generator
+            array.insertSorted(function*(){}());
+            assertArray(array, [1, 2, 3]);
+            // Empty array-like object
+            array.insertSorted({length: 0});
             assertArray(array, [1, 2, 3]);
         });
         this.test("insertSorted duplicate values", function(){
@@ -394,6 +405,8 @@ function testSortedArray(SortedArray){
         this.test("lastIndexOf NaN", function(){
             const array = new SortedArray([NaN]);
             assert.equal(array.lastIndexOf(NaN), 0);
+            array.insert(NaN);
+            assert.equal(array.lastIndexOf(NaN, 1), 1);
         });
         this.test("lastIndexOf signed zero", function(){
             const array = new SortedArray([+0]);
@@ -447,6 +460,7 @@ function testSortedArray(SortedArray){
         assert.equal(array.firstInsertionIndexOf(2, 3), 3);
         assert.equal(array.firstInsertionIndexOf(2, 4), 4);
         assert.equal(array.firstInsertionIndexOf(0, 2, 4), 2);
+        assert.equal(array.firstInsertionIndexOf(0, 2, -2), 2);
     });
     canary.test("lastInsertionIndexOf", function(){
         const array = new SortedArray([1, 1, 2, 2, 2, 3]);
@@ -457,6 +471,8 @@ function testSortedArray(SortedArray){
         assert.equal(array.lastInsertionIndexOf(2, 0, 4), 4);
         assert.equal(array.lastInsertionIndexOf(2, 0, 3), 3);
         assert.equal(array.lastInsertionIndexOf(0, 2, 3), 2);
+        assert.equal(array.lastInsertionIndexOf(0, -4, 3), 2);
+        assert.equal(array.lastInsertionIndexOf(0, 2, -3), 2);
     });
     
     canary.test("length", function(){
@@ -528,6 +544,10 @@ function testSortedArray(SortedArray){
         assertArray(odd, [3, 1]);
         odd.insert(0);
         assertArray(odd, [3, 1, 0]);
+        // Test failure case where input is not a function
+        assert.throws(() => array.filter("nope"),
+            TypeError, "Predicate must be a function."
+        );
     });
     canary.test("find", function(){
         const array = new SortedArray([1, 2, 3, 4]);
@@ -635,10 +655,21 @@ function testSortedArray(SortedArray){
     });
     canary.test("sort", function(){
         const array = new SortedArray([1, 2, 3, 4, 5]);
+        // Explicit comparator
         array.sort((a, b) => b - a);
         assertArray(array, [5, 4, 3, 2, 1]);
         array.insert(6);
         assertArray(array, [6, 5, 4, 3, 2, 1]);
+        // Using the default comparator
+        array.sort();
+        assertArray(array, [1, 2, 3, 4, 5, 6]);
+        array.remove(4);
+        assertArray(array, [1, 2, 3, 5, 6]);
+        // Using the same comparator
+        array.sort();
+        assertArray(array, [1, 2, 3, 5, 6]);
+        array.remove(1);
+        assertArray(array, [2, 3, 5, 6]);
     });
     canary.test("splice", function(){
         const array = new SortedArray([4, 3, 2, 1], (a, b) => b - a);
