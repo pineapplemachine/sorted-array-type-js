@@ -261,6 +261,25 @@ function testSortedArray(SortedArray){
             assertArray(array, ints(60).except(1, 2, 59));
             assert.equal(array.length, 57);
         });
+        this.test("remove values with the same sort order", function(){
+            const array = new SortedArray((a, b) => a.n - b.n);
+            const objects = [
+                {str: "a", n: 1},
+                {str: "b", n: 1},
+                {str: "c", n: 1},
+                {str: "d", n: 2},
+                {str: "e", n: 2},
+                {str: "f", n: 2},
+            ];
+            array.insertSorted(objects);
+            assert.deepEqual(array.map(i => i), objects);
+            array.remove(objects[2]);
+            assert.deepEqual(array.map(i => i.str).join(""), "abdef");
+            array.remove(objects[4]);
+            assert.deepEqual(array.map(i => i.str).join(""), "abdf");
+            array.remove(objects[0]);
+            assert.deepEqual(array.map(i => i.str).join(""), "bdf");
+        });
     });
     
     canary.group("includes", function(){
