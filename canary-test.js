@@ -180,16 +180,36 @@ function testSortedArray(SortedArray){
             array.insertSorted(gen());
             assertArray(array, [1, 2, 3, 4, 5]);
         });
-        this.test("insertSorted array-like object", function(){
+        this.test("insertSorted \"arguments\" object", function(){
             const array = new SortedArray([1, 2, 4]);
             const insertArgs = function(){array.insertSorted(arguments)};
             insertArgs(3, 5);
+            assertArray(array, [1, 2, 3, 4, 5]);
+        });
+        this.test("insertSorted array-like object", function(){
+            const array = new SortedArray([1, 2, 4]);
+            array.insertSorted({length: 2, 0: 3, 1: 5});
             assertArray(array, [1, 2, 3, 4, 5]);
         });
         this.test("insertSorted non-iterable", function(){
             assert.throws(() => new SortedArray().insertSorted(NaN),
                 TypeError, "Expected an iterable list of values."
             );
+        });
+        this.test("insertSorted all prepended", function(){
+            const array = new SortedArray([4, 5, 6]);
+            array.insertSorted([1, 2, 3]);
+            assertArray(array, [1, 2, 3, 4, 5, 6]);
+        });
+        this.test("insertSorted all appended", function(){
+            const array = new SortedArray([1, 2, 3]);
+            array.insertSorted([4, 5, 6]);
+            assertArray(array, [1, 2, 3, 4, 5, 6]);
+        });
+        this.test("insertSorted contiguous sub-array", function(){
+            const array = new SortedArray([1, 2, 6, 7]);
+            array.insertSorted([3, 4, 5]);
+            assertArray(array, [1, 2, 3, 4, 5, 6, 7]);
         });
         this.test("insert sorting stability", function(){
             const array = new SortedArray((a, b) => a.n - b.n);

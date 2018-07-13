@@ -45,7 +45,7 @@ class SortedArray extends Array{
         }else if(typeof(values) === "function" && arguments.length === 1){
             super();
             useComparator = values;
-        // new SortedArray(object with length, cmp?) - support e.g. `arguments`
+        // new SortedArray(object with length, cmp?) - e.g. `arguments`
         }else if(values && typeof(values) === "object" &&
             Number.isFinite(values.length)
         ){
@@ -98,16 +98,56 @@ class SortedArray extends Array{
     // Insert an iterable of assumed-sorted values into the list
     // This will typically be faster than calling `insert` in a loop.
     insertSorted(values){
-        if(!values || !typeof(values[Symbol.iterator]) === "function"){
+        // Optimized implementation for arrays and array-like objects
+        if(values && typeof(values) === "object" &&
+            Number.isFinite(values.length)
+        ){
+            // Exit immediately if the values array is empty
+            if(values.length === 0){
+                return this.length;
+            }
+            // If the last element in the input precedes the first element
+            // in the array, the input can be prepended in one go.
+            const lastInsertionIndex = this.lastInsertionIndexOf(
+                values[values.length - 1]
+            );
+            if(lastInsertionIndex === 0){
+                this.unshift(...values);
+                return this.length;
+            }
+            // If the first element would go in the same place in the array
+            // as the last element, then it can be spliced in all at once.
+            const firstInsertionIndex =  this.lastInsertionIndexOf(values[0]);
+            if(firstInsertionIndex === lastInsertionIndex){
+                this.splice(firstInsertionIndex, 0, ...values);
+                return this.length;
+            }
+            // Array contents must be interlaced
+            let insertIndex = 0;
+            for(let valIndex = 0; valIndex < values.length; valIndex++){
+                const value = values[valIndex];
+                insertIndex = this.lastInsertionIndexOf(value, insertIndex);
+                // If this element was at the end of the array, then every other
+                // element of the input is too and they can be appended at once.
+                if(insertIndex === this.length && valIndex < values.length - 1){
+                    this.push(...values.slice(valIndex));
+                    return this.length;
+                }else{
+                    this.splice(insertIndex++, 0, value);
+                }
+            }
+            return this.length;
+        // Generalized implementation for any iterable
+        }else if(values && typeof(values[Symbol.iterator]) === "function"){
+            let insertIndex = 0;
+            for(let value of values){
+                insertIndex = this.lastInsertionIndexOf(value, insertIndex);
+                this.splice(insertIndex++, 0, value);
+            }
+            return this.length;
+        // Produce an error if the input isn't an acceptable type.
+        }else{
             throw new TypeError("Expected an iterable list of values.");
-        }
-        if(values.length === 0){
-            return;
-        }
-        let index = 0;
-        for(let value of values){
-            index = this.lastInsertionIndexOf(value, index);
-            this.splice(index++, 0, value);
         }
     }
     // Remove the first exactly matching value,
