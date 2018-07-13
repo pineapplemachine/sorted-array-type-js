@@ -45,6 +45,16 @@ package manager to install the `sorted-array-type` package. For example:
 npm install --save sorted-array-type
 ```
 
+Import the SortedArray type into your project with `require` or an ES6 import.
+
+``` js
+const SortedArray = require("sorted-array-type");
+```
+
+``` js
+import SortedArray from "sorted-array-type";
+```
+
 ## Usage
 
 You can create a SortedArray object using the constructor or
