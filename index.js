@@ -91,7 +91,7 @@ class SortedArray extends Array{
     
     // Insert a value into the list.
     insert(value){
-        const index = this.insertionIndexOf(value);
+        const index = this.lastInsertionIndexOf(value);
         this.splice(index, 0, value);
         return this.length;
     }
@@ -101,12 +101,12 @@ class SortedArray extends Array{
         if(!values || !typeof(values[Symbol.iterator]) === "function"){
             throw new TypeError("Expected an iterable list of values.");
         }
-        if(!values.length){
+        if(values.length === 0){
             return;
         }
         let index = 0;
         for(let value of values){
-            index = this.insertionIndexOf(value, index);
+            index = this.lastInsertionIndexOf(value, index);
             this.splice(index++, 0, value);
         }
     }
@@ -127,12 +127,17 @@ class SortedArray extends Array{
     // Returns the index of the first equal element,
     // or the index that such an element should
     // be inserted at if there is no equal element.
-    insertionIndexOf(value, fromIndex){
+    firstInsertionIndexOf(value, fromIndex, endIndex){
         const from = (typeof(fromIndex) !== "number" || fromIndex !== fromIndex ?
             0 : (fromIndex < 0 ? Math.max(0, this.length + fromIndex) : fromIndex)
         );
+        const end = (typeof(endIndex) !== "number" || endIndex !== endIndex ?
+            this.length : (endIndex < 0 ? this.length + endIndex :
+                Math.min(this.length, endIndex)
+            )
+        );
         let min = from - 1;
-        let max = this.length;
+        let max = end;
         while(1 + min < max){
             const mid = min + Math.floor((max - min) / 2);
             const cmp = this.comparator(value, this[mid]);
@@ -144,14 +149,17 @@ class SortedArray extends Array{
     // Returns the index of the last equal element,
     // or the index that such an element should
     // be inserted at if there is no equal element.
-    lastInsertionIndexOf(value, fromIndex){
+    lastInsertionIndexOf(value, fromIndex, endIndex){
         const from = (typeof(fromIndex) !== "number" || fromIndex !== fromIndex ?
-            this.length : (fromIndex < 0 ? this.length + fromIndex :
-                Math.min(this.length, fromIndex)
+            0 : (fromIndex < 0 ? Math.max(0, this.length + fromIndex) : fromIndex)
+        );
+        const end = (typeof(endIndex) !== "number" || endIndex !== endIndex ?
+            this.length : (endIndex < 0 ? this.length + endIndex :
+                Math.min(this.length, endIndex)
             )
         );
-        let min = -1;
-        let max = from;
+        let min = from - 1;
+        let max = end;
         while(1 + min < max){
             const mid = min + Math.floor((max - min) / 2);
             const cmp = this.comparator(value, this[mid]);
@@ -163,7 +171,7 @@ class SortedArray extends Array{
     // Returns the index of the first equal element, or -1 if
     // there is no equal element. Uses SameValueZero.
     indexOf(value, fromIndex){
-        let index = this.insertionIndexOf(value, fromIndex);
+        let index = this.firstInsertionIndexOf(value, fromIndex);
         if(index >= 0 && index < this.length && (this[index] === value ||
             (value !== value && this[index] !== this[index])
         )){
@@ -183,7 +191,7 @@ class SortedArray extends Array{
     // Returns the index of the last equal element, or -1 if
     // there is no equal element. Uses SameValueZero.
     lastIndexOf(value, fromIndex){
-        let index = this.lastInsertionIndexOf(value, fromIndex);
+        let index = this.lastInsertionIndexOf(value, 0, fromIndex);
         if(index >= 0 && index < this.length && (this[index] === value ||
             (value !== value && this[index] !== this[index])
         )){

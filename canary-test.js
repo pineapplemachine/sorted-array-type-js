@@ -82,7 +82,7 @@ function testSortedArray(SortedArray){
             assert.equal(array.length, 3);
             assertArray(array, [1, 2, 3]);
         });
-        this.test("values from \"arguments\"", function(){
+        this.test("values from array-like object", function(){
             const func = function(){return new SortedArray(arguments);};
             assertArray(func(3, 1, 4, 2), [1, 2, 3, 4]);
         });
@@ -159,7 +159,7 @@ function testSortedArray(SortedArray){
             reference.unshift(0);
             assertArray(array, reference);
         });
-        this.test("insert already-sorted values", function(){
+        this.test("insertSorted", function(){
             const array = new SortedArray([10, 20, 30, 40]);
             array.insertSorted([5, 15, 25, 45]);
             assertArray(array, [5, 10, 15, 20, 25, 30, 40, 45]);
@@ -174,10 +174,39 @@ function testSortedArray(SortedArray){
             array.insertSorted([1, 2, 2, 3]);
             assertArray(array, [1, 1, 2, 2, 2, 3, 3]);
         });
+        this.test("insertSorted generator", function(){
+            const gen = function*(){yield 3; yield 5;};
+            const array = new SortedArray([1, 2, 4]);
+            array.insertSorted(gen());
+            assertArray(array, [1, 2, 3, 4, 5]);
+        });
+        this.test("insertSorted array-like object", function(){
+            const array = new SortedArray([1, 2, 4]);
+            const insertArgs = function(){array.insertSorted(arguments)};
+            insertArgs(3, 5);
+            assertArray(array, [1, 2, 3, 4, 5]);
+        });
         this.test("insertSorted non-iterable", function(){
             assert.throws(() => new SortedArray().insertSorted(NaN),
                 TypeError, "Expected an iterable list of values."
             );
+        });
+        this.test("insert sorting stability", function(){
+            const array = new SortedArray((a, b) => a.n - b.n);
+            array.insert({str: "a", n: 1});
+            array.insert({str: "e", n: 2});
+            array.insert({str: "b", n: 1});
+            array.insert({str: "c", n: 1});
+            array.insert({str: "d", n: 1});
+            assert.deepEqual(array.map(i => i.str).join(""), "abcde");
+            array.insertSorted([
+                {str: "e", n: 1},
+                {str: "a", n: 2},
+                {str: "b", n: 2},
+                {str: "c", n: 2},
+                {str: "d", n: 3},
+            ]);
+            assert.deepEqual(array.map(i => i.str).join(""), "abcdeeabcd");
         });
     });
     
@@ -330,6 +359,27 @@ function testSortedArray(SortedArray){
             assert.equal(array.lastIndexOf(2, -4), -1);
             assert.equal(array.lastIndexOf(2, -10), -1);
         });
+    });
+    
+    canary.test("firstInsertionIndexOf", function(){
+        const array = new SortedArray([1, 1, 2, 2, 2, 3]);
+        assert.equal(array.firstInsertionIndexOf(0), 0);
+        assert.equal(array.firstInsertionIndexOf(2), 2);
+        assert.equal(array.firstInsertionIndexOf(3), 5);
+        assert.equal(array.firstInsertionIndexOf(4), 6);
+        assert.equal(array.firstInsertionIndexOf(2, 3), 3);
+        assert.equal(array.firstInsertionIndexOf(2, 4), 4);
+        assert.equal(array.firstInsertionIndexOf(0, 2, 4), 2);
+    });
+    canary.test("lastInsertionIndexOf", function(){
+        const array = new SortedArray([1, 1, 2, 2, 2, 3]);
+        assert.equal(array.lastInsertionIndexOf(0), 0);
+        assert.equal(array.lastInsertionIndexOf(2), 5);
+        assert.equal(array.lastInsertionIndexOf(3), 6);
+        assert.equal(array.lastInsertionIndexOf(4), 6);
+        assert.equal(array.lastInsertionIndexOf(2, 0, 4), 4);
+        assert.equal(array.lastInsertionIndexOf(2, 0, 3), 3);
+        assert.equal(array.lastInsertionIndexOf(0, 2, 3), 2);
     });
     
     canary.test("length", function(){
@@ -551,6 +601,10 @@ function testSortedArray(SortedArray){
     canary.test("JSON.stringify", function(){
         const array = new SortedArray([3, 1, 2]);
         assert.equal(JSON.stringify(array), "[1,2,3]");
+    });
+    canary.test("isArray", function(){
+        const array = new SortedArray([3, 1, 2]);
+        assert.equal(true, Array.isArray(array));
     });
     
     return canary;

@@ -14,6 +14,8 @@ The package is licensed according to the permissive
 Note that the SortedArray type uses the native `Array.sort`
 method for some functionality, meaning that sort stability
 will depend on the platform.
+If `Array.sort` is stable, however, then all SortedArray sort
+and insertion operations will also be stable.
 
 ``` js
 const sortedArray = new SortedArray(["alice", "carl", "bob"]);
@@ -160,12 +162,12 @@ sortedArray.unshift(); // Prepend a value to the beginning of the array. [!]
 sortedArray.values(); // Returns an iterator of values in the array.
 ```
 
-Also of interest are the `insertionIndexOf` and `lastInsertionIndexOf`
+Also of interest are the `firstInsertionIndexOf` and `lastInsertionIndexOf`
 methods. These return the first index and the last index, respectively,
 where a value can be found or should be inserted into the array.
 
 ``` js
-sortedArray.insertionIndexOf(x);
+sortedArray.firstInsertionIndexOf(x);
 sortedArray.lastInsertionIndexOf(x);
 ```
 
