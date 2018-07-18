@@ -2,6 +2,7 @@
 
 Fifth release. 18 July 2018.
 
+- Remove files except `index.js`, `LICENSE`, and `readme.md` from publication.
 - Add the option to use a value equality function other than SameValueZero.
 - Add optional value equality function argument to the SortedArray constructor.
 - Add optional value equality function argument to `SortedArray.from`.
