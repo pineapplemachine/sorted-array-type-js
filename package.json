@@ -13,6 +13,11 @@
         "structure"
     ],
     "main": "index.js",
+    "files": [
+        "index.js",
+        "LICENSE",
+        "readme.md"
+    ],
     "license": "Zlib",
     "homepage": "https://github.com/pineapplemachine/sorted-array-type-js",
     "bugs": "https://github.com/pineapplemachine/sorted-array-type-js/issues",
