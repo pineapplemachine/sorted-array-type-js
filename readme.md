@@ -122,17 +122,33 @@ You should not normally `push` to a SortedArray, and you should
 consider using `remove` to be better practice than using `indexOf`
 and `slice`, though both options will work.
 
+The `remove` method returns `true` when the value was found in the array
+and removed from it and `false` otherwise.
+The method is complemented by the `removeLast` and `removeAll` methods.
+Where `remove` removes the first equal value, `removeLast` removes the
+last equal value.
+`removeAll` removes all equal values and returns them in a new SortedArray.
+
 There is also an `insertSorted` method, which can be used to efficiently
 insert the contents of another iterable which is already sorted according
 to the same comparison function.
 Passing iterables to the `insertSorted` method that are not correctly sorted
 will cause the SortedArray to behave incorrectly, so use it with care!
 
+The `getEqualValues` method returns all elements in the array equal to
+an input, according to its value equality function. (SameValueZero by default.)
+Where `comparator(a, b) === 0` does not necessarily imply `valuesEqual(a, b)`,
+it is important to use this method instead of, for example,
+slicing from `indexOf(value)` to `lastIndexOf(value)`.
+
 ``` js
 sortedArray = new SortedArray();
 sortedArray.insert(1); // Insert 1. Returns the new length of the array.
-sortedArray.remove(1); // Remove 1. True if the value was in the array.
 sortedArray.insertSorted([1, 2, 3, 4]); // Insert already-sorted values.
+sortedArray.remove(1); // Remove 1. True if the value was in the array.
+sortedArray.removeLast(1); // Remove the last 1. True if successful.
+sortedArray.removeAll(2); // Remove all 2. Returns a SortedArray.
+sortedArray.getEqualValues(3); // Get a SortedArray of values equal to 3.
 ```
 
 SortedArrays support all of the standard ES6 Array methods and
