@@ -55,25 +55,41 @@ const SortedArray = require("sorted-array-type");
 import SortedArray from "sorted-array-type";
 ```
 
-## Usage
+## Documentation
 
 You can create a SortedArray object using the constructor or
 using the `of` and `from` class methods.
 
 The constructor and the `from` static method accept an optional
-[comparator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
-as their second argument.
+[comparator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort).
 If no comparator was given, the created SortedArray uses
 native JavaScript `<` and `>` comparisons to sort elements
 in ascending order.
 
+These functions also accept an optional value equality function.
+A value equality function should return a truthy value when its two
+arguments represent identical values, and a falsey value otherwise.
+This function `valuesEqual(arrayElement, value)` determines, for example,
+whether `array.indexOf(value)` should return the index of `arrayElement`.
+When no value equality function is provided, a
+[SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+implementation is used by default.
+
+When an existing SortedArray is passed to the SortedArray constructor,
+if the call to the constructor did not specify either the comparator
+or the value equality function, then the corresponding functions belonging
+to the input SortedArray will be copied for the new array.
+
 ``` js
-array = new SortedArray();                                    // []
-array = new SortedArray([3, 1, 2]);                           // [1, 2, 3]
-array = new SortedArray([3, 1, 2], (a, b) => b - a);          // [3, 2, 1]
-array = SortedArray.of(1, 3, 2);                              // [1, 2, 3]
-array = SortedArray.from([1, 3, 2]);                          // [1, 2, 3]
-array = SortedArray.from([1, 3, 2], (a, b) => b - a);         // [3, 2, 1]
+array = new SortedArray();                                  // []
+array = new SortedArray([3, 1, 2]);                         // [1, 2, 3]
+array = new SortedArray([3, 1, 2], (a, b) => b - a);        // [3, 2, 1]
+array = SortedArray.of(1, 3, 2);                            // [1, 2, 3]
+array = SortedArray.from([1, 3, 2]);                        // [1, 2, 3]
+array = SortedArray.from([1, 3, 2], (a, b) => b - a);       // [3, 2, 1]
+array = SortedArray.from([1, 3, "2"],                       // [1, "2", 3]
+    (a, b) => +a - +b, (a, b) => a == b
+);
 ```
 
 There are also `ofSorted` and `fromSorted` class methods for constructing
@@ -82,9 +98,12 @@ Passing values to these methods that are not correctly sorted will
 cause the SortedArray to behave incorrectly, so use them with care!
 
 ``` js
-array = SortedArray.ofSorted(1, 2, 3);                        // [1, 2, 3]
-array = SortedArray.fromSorted([1, 2, 3]);                    // [1, 2, 3]
-array = SortedArray.fromSorted([3, 2, 1], (a, b) => b - a);   // [3, 2, 1]
+array = SortedArray.ofSorted(1, 2, 3);                      // [1, 2, 3]
+array = SortedArray.fromSorted([1, 2, 3]);                  // [1, 2, 3]
+array = SortedArray.fromSorted([3, 2, 1], (a, b) => b - a); // [3, 2, 1]
+array = SortedArray.fromSorted([1, "2", 3],                 // [1, "2", 3]
+    (a, b) => +a - +b, (a, b) => a == b
+);
 ```
 
 SortedArrays have a `length` property and can be indexed and enumerated
@@ -94,9 +113,7 @@ just like normal Arrays.
 sortedArray = new SortedArray([4, 2, 3, 1]); // [1, 2, 3, 4]
 sortedArray[0] // 1
 sortedArray.length // 4
-for(let element of sortedArray){
-    // 1, 2, 3, 4
-}
+for(let element of sortedArray){} // 1, 2, 3, 4
 ```
 
 SortedArrays have `insert` and `remove` methods. They should be used
@@ -136,7 +153,9 @@ operations to use the same new ordering.
 Methods like `indexOf` or `remove` which involve comparisons for finding
 an exact element in the array all use
 [SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
-for comparisons.
+for comparisons by default.
+A different value equality function can be passed as an argument to the
+`SortedArray` constructor or to the `from` and `fromSorted` static methods.
 
 ``` js
 sortedArray.concat(); // Returns a new, concatenated Array.

@@ -1,3 +1,13 @@
+# v1.2.0
+
+Fifth release. 18 July 2018.
+
+- Add the option to use a value equality function other than SameValueZero.
+- Add optional value equality function argument to the SortedArray constructor.
+- Add optional value equality function argument to `SortedArray.from`.
+- Add optional value equality function argument to `SortedArray.fromSorted`.
+- Add `removeLast` method.
+
 # v1.1.0
 
 Fourth release. 13 July 2018.
