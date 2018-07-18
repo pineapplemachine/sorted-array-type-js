@@ -30,7 +30,7 @@ class Ints{
 }
 
 function testSortedArray(SortedArray){
-    const canary = require("canary-test").Group("sorted-array");
+    const canary = require("canary-test").Group("SortedArray");
     const assert = require("assert").strict;
     
     function assertArray(actual, expected){
@@ -72,7 +72,21 @@ function testSortedArray(SortedArray){
             const array = new SortedArray([4, 3, 1, 2], (a, b) => b - a);
             assertArray(array, [4, 3, 2, 1]);
         });
-        this.test("values and string", function(){
+        this.test("comparator and equality functions", function(){
+            const array = new SortedArray(
+                (a, b) => a - b,
+                (a, b) => a === b
+            );
+            assertArray(array, []);
+        });
+        this.test("values and comparator and equality function", function(){
+            const array = new SortedArray([4, 3, 1, 2],
+                (a, b) => b - a,
+                (a, b) => a === b
+            );
+            assertArray(array, [4, 3, 2, 1]);
+        });
+        this.test("values as string", function(){
             const array = new SortedArray("hello");
             assertArray(array, ["e", "h", "l", "l", "o"]);
         });
@@ -100,13 +114,37 @@ function testSortedArray(SortedArray){
             const b = SortedArray.ofSorted(3, 1, 2);
             assertArray(new SortedArray(b), [3, 1, 2]);
         });
+        this.test("values from SortedList with equality function", function(){
+            const cmp = (a, b) => +a - +b;
+            const original = new SortedArray([1, 3, "2", "4"],
+                cmp, (a, b) => a == b
+            );
+            const differentSort = new SortedArray(original, (a, b) => +b - +a);
+            assertArray(differentSort, ["4", 3, "2", 1]);
+            const sameSort = new SortedArray(original, cmp);
+            assertArray(sameSort, [1, "2", 3, "4"]);
+            const unspecifiedSort = new SortedArray(original);
+            assertArray(unspecifiedSort, [1, "2", 3, "4"]);
+            const differentEquality = new SortedArray(original,
+                cmp, (a, b) => a === b
+            );
+            assertArray(differentEquality, [1, "2", 3, "4"]);
+        });
         this.test("invalid arguments", function(){
             assert.throws(() => new SortedArray([], "nope"),
-                TypeError, "Comparator must be a function."
+                TypeError, "Comparator argument must be a function."
+            );
+            assert.throws(() => new SortedArray([], () => 0, "nope"),
+                TypeError, "Value equality argument must be a function."
             );
             assert.throws(() => new SortedArray(true),
-                TypeError, "Unhandled input type. Expected an iterable."
+                TypeError, "Unhandled values input type. Expected an iterable."
             );
+            for(let invalidLength of [-1, +1.5, Infinity, NaN]){
+                assert.throws(() => new SortedArray(invalidLength),
+                    RangeError, "Invalid array length"
+                );
+            }
         });
         this.test("of", function(){
             assertArray(SortedArray.of(), []);
@@ -310,6 +348,29 @@ function testSortedArray(SortedArray){
             assert.deepEqual(array.map(i => i.str).join(""), "abdf");
             array.remove(objects[0]);
             assert.deepEqual(array.map(i => i.str).join(""), "bdf");
+        });
+        this.test("removeLast", function(){
+            const array = SortedArray.ofSorted(1, 2, 3);
+            assert.equal(array.removeLast(1), true);
+            assertArray(array, [2, 3]);
+            assert.equal(array.removeLast(3), true);
+            assertArray(array, [2]);
+            assert.equal(array.removeLast(3), false);
+            assertArray(array, [2]);
+            assert.equal(array.removeLast(4), false);
+            assertArray(array, [2]);
+            assert.equal(array.removeLast(2), true);
+            assertArray(array, []);
+        });
+        this.test("removeLast NaN", function(){
+            const array = SortedArray.ofSorted(NaN);
+            assert.equal(array.removeLast(NaN), true);
+            assertArray(array, []);
+        });
+        this.test("removeLast signed zero", function(){
+            const array = SortedArray.ofSorted(+0);
+            assert.equal(array.removeLast(-0), true);
+            assertArray(array, []);
         });
     });
     
@@ -700,6 +761,68 @@ function testSortedArray(SortedArray){
             count++;
         }
         assert.equal(count, 3);
+    });
+    
+    canary.group("custom value equality function", function(){
+        this.test("indexOf and lastIndexOf", function(){
+            const cmp = (a, b) => +a - +b;
+            const eq = (a, b) => a == b;
+            const array = new SortedArray([1, "1", 1, "2", 2], cmp, eq);
+            assert.equal(array.indexOf(1), 0);
+            assert.equal(array.indexOf("1"), 0);
+            assert.equal(array.lastIndexOf(1), 2);
+            assert.equal(array.lastIndexOf("1"), 2);
+            assert.equal(array.indexOf(2), 3);
+            assert.equal(array.indexOf("2"), 3);
+            assert.equal(array.lastIndexOf(2), 4);
+            assert.equal(array.lastIndexOf("2"), 4);
+        });
+        this.test("remove and removeLast", function(){
+            const cmp = (a, b) => +a - +b;
+            const eq = (a, b) => a == b;
+            const a = new SortedArray([], cmp, eq);
+            const b = SortedArray.from([], cmp, eq);
+            const c = SortedArray.fromSorted([], cmp, eq);
+            for(let array of [a, b, c]){
+                array.insert(1);
+                array.insert("2");
+                array.insert(4);
+                array.insert("3");
+                array.insert(2);
+                array.insert("2");
+                assertArray(array, [1, "2", 2, "2", "3", 4]);
+                assert.equal(array.remove(1), true);
+                assertArray(array, ["2", 2, "2", "3", 4]);
+                assert.equal(array.remove(3), true);
+                assertArray(array, ["2", 2, "2", 4]);
+                assert.equal(array.remove("4"), true);
+                assertArray(array, ["2", 2, "2"]);
+                assert.equal(array.remove(2), true);
+                assertArray(array, [2, "2"]);
+                assert.equal(array.removeLast(2), true);
+                assertArray(array, [2]);
+                assert.equal(array.removeLast(2), true);
+                assertArray(array, []);
+            }
+        });
+        this.test("slice", function(){
+            const cmp = (a, b) => +a - +b;
+            const eq = (a, b) => a == b;
+            const array = SortedArray.fromSorted([1, "2", 3, "4"], cmp, eq);
+            const slice = array.slice(2, 4);
+            assertArray(slice, [3, "4"]);
+            assert.equal(slice.remove(4), true);
+            assertArray(slice, [3]);
+        });
+        this.test("splice", function(){
+            const cmp = (a, b) => +a - +b;
+            const eq = (a, b) => a == b;
+            const array = SortedArray.fromSorted([1, "2", 3, "4"], cmp, eq);
+            const splice = array.splice(2, 2);
+            assertArray(splice, [3, "4"]);
+            assert.equal(splice.remove(4), true);
+            assertArray(splice, [3]);
+        });
     });
     
     canary.test("valueOf", function(){
