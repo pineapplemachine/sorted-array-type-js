@@ -211,6 +211,46 @@ class SortedArray extends Array{
             return false;
         }
     }
+    // Remove all matching values.
+    // Returns the removed elements as a new SortedArray.
+    removeAll(value){
+        let index = this.firstInsertionIndexOf(value);
+        const removed = new SortedArray();
+        removed.valuesEqual = this.valuesEqual;
+        removed.comparator = this.comparator;
+        removed.reversedComparator = this.reversedComparator;
+        if(index < 0) return removed;
+        while(index < this.length &&
+            this.comparator(this[index], value) === 0
+        ){
+            if(this.valuesEqual(this[index], value)){
+                removed.push(this[index]);
+                this.splice(index, 1);
+            }else{
+                index++;
+            }
+        }
+        return removed;
+    }
+    // Get all equal values.
+    // Returns the equivalent elements as a new SortedArray.
+    getEqualValues(value){
+        let index = this.firstInsertionIndexOf(value);
+        const equal = new SortedArray();
+        equal.valuesEqual = this.valuesEqual;
+        equal.comparator = this.comparator;
+        equal.reversedComparator = this.reversedComparator;
+        if(index < 0) return equal;
+        while(index < this.length &&
+            this.comparator(this[index], value) === 0
+        ){
+            if(this.valuesEqual(this[index], value)){
+                equal.push(this[index]);
+            }
+            index++;
+        }
+        return equal;
+    }
     
     // Returns the index of the first equal element,
     // or the index that such an element should
