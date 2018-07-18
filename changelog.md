@@ -1,3 +1,9 @@
+# v1.2.1
+
+Sixth release. 18 July 2018.
+
+- Add `getEqualVaues` and `removeAll` methods.
+
 # v1.2.0
 
 Fifth release. 18 July 2018.
