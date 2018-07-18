@@ -219,12 +219,11 @@ class SortedArray extends Array{
         removed.valuesEqual = this.valuesEqual;
         removed.comparator = this.comparator;
         removed.reversedComparator = this.reversedComparator;
-        if(index < 0) return removed;
         while(index < this.length &&
             this.comparator(this[index], value) === 0
         ){
             if(this.valuesEqual(this[index], value)){
-                removed.push(this[index]);
+                Array.prototype.push.call(removed, this[index]);
                 this.splice(index, 1);
             }else{
                 index++;
@@ -240,12 +239,11 @@ class SortedArray extends Array{
         equal.valuesEqual = this.valuesEqual;
         equal.comparator = this.comparator;
         equal.reversedComparator = this.reversedComparator;
-        if(index < 0) return equal;
         while(index < this.length &&
             this.comparator(this[index], value) === 0
         ){
             if(this.valuesEqual(this[index], value)){
-                equal.push(this[index]);
+                Array.prototype.push.call(equal, this[index]);
             }
             index++;
         }

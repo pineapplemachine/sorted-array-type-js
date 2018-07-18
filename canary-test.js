@@ -412,6 +412,19 @@ function testSortedArray(SortedArray){
             removed.insert("+1");
             assertArray(removed, [1, "1", 1, "+1", "2"]);
         });
+        this.test("removeAll with non-contiguous elements", function(){
+            const cmp = (a, b) => (
+                a[0].toLowerCase().codePointAt(0) -
+                b[0].toLowerCase().codePointAt(0)
+            );
+            const array = SortedArray.fromSorted(
+                ["able", "apple", "ABLE", "ace", "Able", "bear"], cmp,
+                (a, b) => a.toLowerCase() === b.toLowerCase()
+            );
+            const removed = array.removeAll("able");
+            assertArray(array, ["apple", "ace", "bear"]);
+            assertArray(removed, ["able", "ABLE", "Able"]);
+        });
     });
     
     canary.group("includes", function(){
@@ -552,6 +565,35 @@ function testSortedArray(SortedArray){
         });
     });
     
+    canary.group("getEqualValues", function(){
+        this.test("contiguous results", function(){
+            const array = SortedArray.fromSorted([1, "1", 1, "2"],
+                (a, b) => +a - +b,
+                (a, b) => a == b
+            );
+            assertArray(array.getEqualValues(0), []);
+            assertArray(array.getEqualValues(2), ["2"]);
+            const values = array.getEqualValues(1);
+            assertArray(values, [1, "1", 1]);
+            values.insert("2");
+            assertArray(values, [1, "1", 1, "2"]);
+            values.insert("+1");
+            assertArray(values, [1, "1", 1, "+1", "2"]);
+        });
+        this.test("non-contiguous results", function(){
+            const cmp = (a, b) => (
+                a[0].toLowerCase().codePointAt(0) -
+                b[0].toLowerCase().codePointAt(0)
+            );
+            const array = SortedArray.fromSorted(
+                ["able", "apple", "ABLE", "ace", "Able", "bear"], cmp,
+                (a, b) => a.toLowerCase() === b.toLowerCase()
+            );
+            const values = array.getEqualValues("able");
+            assertArray(values, ["able", "ABLE", "Able"]);
+        });
+    });
+    
     canary.test("firstInsertionIndexOf", function(){
         const array = new SortedArray([1, 1, 2, 2, 2, 3]);
         assert.equal(array.firstInsertionIndexOf(0), 0);
@@ -574,21 +616,6 @@ function testSortedArray(SortedArray){
         assert.equal(array.lastInsertionIndexOf(0, 2, 3), 2);
         assert.equal(array.lastInsertionIndexOf(0, -4, 3), 2);
         assert.equal(array.lastInsertionIndexOf(0, 2, -3), 2);
-    });
-    
-    canary.test("getEqualValues", function(){
-        const array = SortedArray.fromSorted([1, "1", 1, "2"],
-            (a, b) => +a - +b,
-            (a, b) => a == b
-        );
-        assertArray(array.getEqualValues(0), []);
-        assertArray(array.getEqualValues(2), ["2"]);
-        const values = array.getEqualValues(1);
-        assertArray(values, [1, "1", 1]);
-        values.insert("2");
-        assertArray(values, [1, "1", 1, "2"]);
-        values.insert("+1");
-        assertArray(values, [1, "1", 1, "+1", "2"]);
     });
     
     canary.test("length", function(){
