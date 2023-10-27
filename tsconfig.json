@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es2019",
+        "module": "commonjs",
+        "outDir": "dist",
+        "sourceMap": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "downlevelIteration": true,
+        "strict": true,
+        "rootDir": ".",
+        "baseUrl": ".",
+    },
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "test/**/*.js",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
