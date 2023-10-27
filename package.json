@@ -33,15 +33,19 @@
             "email": "sophiek@pineapplemachine.com"
         }
     ],
-    "dependencies": {},
     "devDependencies": {
+        "@types/node": "^20.8.9",
         "array.prototype.flat": "1.2.1",
         "array.prototype.flatmap": "1.2.1",
-        "canary-test": "1.0.2",
-        "nyc": "12.0.2"
+        "canary-test": "1.1.2",
+        "nyc": "15.1.0",
+        "typedoc": "0.25.2",
+        "typescript": "5.2.2"
     },
     "scripts": {
-        "test": "node canary-test.js",
+        "test": "npm rum build && node dist/test/test.js",
+        "build": "npx tsc",
+        "typedoc": "npx typedoc",
         "coverage": "nyc npm run test",
         "prepublish": "npm run coverage"
     }
