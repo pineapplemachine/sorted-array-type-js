@@ -14,6 +14,8 @@ It fully supports indexing, enumeration, and a length property.
 The package is licensed according to the permissive open source
 [zlib/libpng license](LICENSE).
 
+[View the generated documentation here.](https://pineapplemachine.github.io/sorted-array-type-js/)
+
 Note that the SortedArray type uses the native `Array.sort`
 method for some functionality, meaning that sort stability will
 [depend on the platform](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability).
@@ -63,23 +65,77 @@ import SortedArray from "sorted-array-type";
 
 ## Documentation
 
+[View the generated documentation here.](https://pineapplemachine.github.io/sorted-array-type-js/)
+
+### Abusing a SortedArray
+
+**Warning:** The SortedArray type exposes the full interface of its
+base Array type, including functions that can cause it to become
+invalid if used without care.
+
+These operations, if used carelessly, can cause the SortedArray's
+contents to no longer be in sorted order.
+**You very probably do not have a good reason to do this!**
+
+Invalidating the SortedArray's assumption that its contents are
+always in a sorted order will cause some functions to have
+unexpected behavior. Use these tools with care!
+
+``` js
+// USE WITH CAUTION!
+sortedArray[0] = x;
+sortedArray.length = x;
+sortedArray.push(x);
+sortedArray.unshift(x);
+sortedArray.splice(0, 0, x);
+sortedArray.fill(x, 0, 1);
+sortedArray.copyWithin(0, 1, 2);
+```
+
+Note that the SortedArray type provides a `sort` method which can be
+used to right prior wrongs and ensure that the array's contents are
+now definitely in the expected sorted order.
+
+``` js
+sortedArray.sort();
+```
+
+Also of interest to those intending to do more advanced operations on
+their SortedArrays are the `firstInsertionIndexOf` and `lastInsertionIndexOf`
+methods. These return the first index and the last index, respectively,
+where a value can be found or should be inserted into the array.
+They are used, for example, to implement the SortedArray's `insert` method.
+
+``` js
+sortedArray.firstInsertionIndexOf(x);
+sortedArray.lastInsertionIndexOf(x);
+```
+
+### Creating a SortedArray
+
 You can create a SortedArray object using the class constructor or
 using the `of` and `from` static class methods.
 
 The constructor and the `from` static method accept an optional
 [comparator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort).
-If no comparator was given, the created SortedArray uses
+If no comparator was explicitly provided, the created SortedArray uses
 native JavaScript `<` and `>` comparisons to sort elements
 in ascending order.
 
 These functions also accept an optional equality function.
-An equality function should return a truthy value when its two
-arguments represent identical values, and a falsey value otherwise.
-This function `valuesEqual(arrayElement, value)` determines, for example,
-whether `array.indexOf(value)` should return the index of `arrayElement`.
-When no value equality function is provided, a
+An equality function returns a truthy value when its two
+arguments represent equivalent values, and a falsey value otherwise.
+This function determines what array items are considered equivalent in
+calls to, for example, `sortedArray.indexOf(value)`.
+When no value equality function was explicitly provided, then a
 [SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
-implementation is used by default.
+strict equality implementation is used by default.
+
+The SortedArray implementation assumes that any values `a` and `b`
+for which `equalityFunc(a, b) === true`,
+it is also the case that `compareFunc(a, b) === 0`.
+Providing functions that violate this assumption may cause
+unexpected behavior.
 
 When an existing SortedArray is passed to the SortedArray constructor,
 if the call to the constructor did not specify either the comparator
@@ -112,40 +168,29 @@ array = SortedArray.fromSorted([1, "2", 3],                 // [1, "2", 3]
 );
 ```
 
+### Using a SortedArray
+
 SortedArrays have a `length` property and can be indexed and enumerated
-just like normal Arrays.
+like normal Arrays.
 
 ``` js
 sortedArray = new SortedArray([4, 2, 3, 1]); // [1, 2, 3, 4]
 sortedArray[0] // 1
 sortedArray.length // 4
-for(let element of sortedArray){} // 1, 2, 3, 4
+for(const element of sortedArray) {} // 1, 2, 3, 4
 ```
 
 SortedArrays have `insert` and `remove` methods. They should be used
 to add and remove elements.
-You should not normally `push` to a SortedArray, and you should
-consider using `remove` to be better practice than using `indexOf`
-and `slice`, though both options will work.
-
-The `remove` method returns `true` when the value was found in the array
-and removed from it and `false` otherwise.
-The method is complemented by the `removeLast` and `removeAll` methods.
-Where `remove` removes the first equal value, `removeLast` removes the
-last equal value.
-`removeAll` removes all equal values.
+You should not normally `push` to a SortedArray.
+You should consider using `remove` to be better practice than using `indexOf`
+and `splice`, though either option will work.
 
 There is also an `insertSorted` method, which can be used to efficiently
 insert the contents of another iterable which is already sorted according
-to the same comparison function.
+to the same comparator function.
 Passing iterables to the `insertSorted` method that are not correctly sorted
 will cause the SortedArray to behave incorrectly, so use it with care!
-
-The `getEqualValues` method returns all elements in the array equal to
-an input, according to its value equality function. (SameValueZero by default.)
-Where `comparator(a, b) === 0` does not necessarily imply `valuesEqual(a, b)`,
-it is important to use this method instead of, for example,
-slicing from `indexOf(value)` to `lastIndexOf(value)`.
 
 ``` js
 sortedArray = new SortedArray();
@@ -177,8 +222,8 @@ Methods like `indexOf` or `remove` which involve comparisons for finding
 an exact element in the array all use
 [SameValueZero](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
 for comparisons by default.
-A different value equality function can be passed as an argument to the
-`SortedArray` constructor or to the `from` and `fromSorted` static methods.
+A different value equality function can be passed as an argument
+when creating a new SortedArray.
 
 ``` js
 sortedArray.concat(); // Returns a new, concatenated Array.
@@ -213,31 +258,3 @@ sortedArray.toString(); // Get a string representation of the array.
 sortedArray.unshift(); // Prepend value to the start of the array. [!]
 sortedArray.values(); // Returns an iterator of values in the array.
 ```
-
-Also of interest are the `firstInsertionIndexOf` and `lastInsertionIndexOf`
-methods. These return the first index and the last index, respectively,
-where a value can be found or should be inserted into the array.
-
-``` js
-sortedArray.firstInsertionIndexOf(x);
-sortedArray.lastInsertionIndexOf(x);
-```
-
-Some operations, if used carelessly, can cause the SortedArray's
-contents to no longer be in sorted order. **DON'T DO THIS!**
-Invalidating the SortedArray's assumption that its contents are
-always in a sorted order will cause incorrect behavior.
-Use these tools with care!
-
-``` js
-// USE WITH CAUTION!
-sortedArray[0] = x;
-sortedArray.length = x;
-sortedArray.push(x);
-sortedArray.unshift(x);
-sortedArray.splice(0, 0, x);
-sortedArray.fill(x, 0, 1);
-sortedArray.copyWithin(0, 1, 2);
-```
-
-
