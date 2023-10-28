@@ -1092,3 +1092,5 @@ export namespace SortedArray {
      */
     export type ElementCallback<This, T, U> = SortedArrayElementCallback<This, T, U>;
 }
+
+export default SortedArray;

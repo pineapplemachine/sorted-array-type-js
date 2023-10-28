@@ -4,7 +4,7 @@ import {strict as assert} from "node:assert";
 
 import CanaryTest from "canary-test";
 
-import {SortedArray} from "../src/index";
+import SortedArray from "../src/index";
 
 function ints(upTo: number): Ints {
     return new Ints(upTo);
