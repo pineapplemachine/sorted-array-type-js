@@ -47,11 +47,12 @@
     },
     "scripts": {
         "test": "npm rum build && node dist/test/test.js",
+        "test-commonjs": "npm rum build && node test/test-commonjs.js",
         "build": "npx tsc",
         "typedoc": "npx typedoc",
         "coverage": "npx nyc --reporter lcov npm run test",
         "coverage-lcov": "npx nyc npm run test",
         "coverage-report": "npx nyc report --reporter html",
-        "prepublish": "npm run coverage"
+        "prepublish": "npm run test && npm run test-commonjs"
     }
 }
