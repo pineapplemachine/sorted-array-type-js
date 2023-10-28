@@ -1,7 +1,7 @@
 {
     "name": "sorted-array-type",
     "description": "Array with sorted insertion and optimized search methods.",
-    "version": "1.2.1",
+    "version": "1.3.0",
     "keywords": [
         "sorted",
         "sort",
