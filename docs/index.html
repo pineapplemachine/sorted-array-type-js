@@ -23,6 +23,7 @@ additional methods relating to keeping elements in a sorted order.
 It fully supports indexing, enumeration, and a length property.</p>
 <p>The package is licensed according to the permissive open source
 <a href="LICENSE">zlib/libpng license</a>.</p>
+<p><a href="https://pineapplemachine.github.io/sorted-array-type-js/">View the generated documentation here.</a></p>
 <p>Note that the SortedArray type uses the native <code>Array.sort</code>
 method for some functionality, meaning that sort stability will
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability">depend on the platform</a>.
@@ -35,25 +36,56 @@ package manager to install the <code>sorted-array-type</code> package. For examp
 <pre><code class="language-text">npm install --save sorted-array-type
 </code><button>Copy</button></pre>
 <p>Import the SortedArray type into your project with <code>require</code> or an ES6 import.</p>
-<pre><code class="language-js"><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">SortedArray</span><span class="hl-1"> = </span><span class="hl-3">require</span><span class="hl-1">(</span><span class="hl-4">&quot;sorted-array-type&quot;</span><span class="hl-1">);</span>
+<pre><code class="language-js"><span class="hl-0">const</span><span class="hl-1"> {</span><span class="hl-2">SortedArray</span><span class="hl-1">} = </span><span class="hl-3">require</span><span class="hl-1">(</span><span class="hl-4">&quot;sorted-array-type&quot;</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 <pre><code class="language-js"><span class="hl-8">import</span><span class="hl-1"> </span><span class="hl-5">SortedArray</span><span class="hl-1"> </span><span class="hl-8">from</span><span class="hl-1"> </span><span class="hl-4">&quot;sorted-array-type&quot;</span><span class="hl-1">;</span>
 </code><button>Copy</button></pre>
-<a id="md:documentation" class="tsd-anchor"></a><h2><a href="#md:documentation">Documentation</a></h2><p>You can create a SortedArray object using the class constructor or
+<a id="md:documentation" class="tsd-anchor"></a><h2><a href="#md:documentation">Documentation</a></h2><p><a href="https://pineapplemachine.github.io/sorted-array-type-js/">View the generated documentation here.</a></p>
+<a id="md:abusing-a-sortedarray" class="tsd-anchor"></a><h3><a href="#md:abusing-a-sortedarray">Abusing a SortedArray</a></h3><p><strong>Warning:</strong> The SortedArray type exposes the full interface of its
+base Array type, including functions that can cause it to become
+invalid if used without care.</p>
+<p>These operations, if used carelessly, can cause the SortedArray&#39;s
+contents to no longer be in sorted order.
+<strong>You very probably do not have a good reason to do this!</strong></p>
+<p>Invalidating the SortedArray&#39;s assumption that its contents are
+always in a sorted order will cause some functions to have
+unexpected behavior. Use these tools with care!</p>
+<pre><code class="language-js"><span class="hl-7">// USE WITH CAUTION!</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">] = </span><span class="hl-5">x</span><span class="hl-1">;</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-5">length</span><span class="hl-1"> = </span><span class="hl-5">x</span><span class="hl-1">;</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">push</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">unshift</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">splice</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">fill</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">, </span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">copyWithin</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">);</span>
+</code><button>Copy</button></pre>
+<p>Note that the SortedArray type provides an <code>isSorted</code> method which
+may be used to check whether the array&#39;s contents are correctly sorted
+and a <code>resort</code> method which may be used to forcibly re-sort the contents
+of the list and put them into the right order, if they weren&#39;t already.
+You should not normally need these methods!</p>
+<pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">isSorted</span><span class="hl-1">();</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">resort</span><span class="hl-1">();</span>
+</code><button>Copy</button></pre>
+<p>Also of interest to those intending to do more advanced operations on
+their SortedArrays are the <code>firstInsertionIndexOf</code> and <code>lastInsertionIndexOf</code>
+methods. These return the first index and the last index, respectively,
+where a value can be found or should be inserted into the array.
+They are used, for example, to implement the SortedArray&#39;s <code>insert</code> method.</p>
+<pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">firstInsertionIndexOf</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">lastInsertionIndexOf</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span>
+</code><button>Copy</button></pre>
+<a id="md:creating-a-sortedarray" class="tsd-anchor"></a><h3><a href="#md:creating-a-sortedarray">Creating a SortedArray</a></h3><p>You can create a SortedArray object using the class constructor or
 using the <code>of</code> and <code>from</code> static class methods.</p>
 <p>The constructor and the <code>from</code> static method accept an optional
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">comparator function</a>.
-If no comparator was given, the created SortedArray uses
+If no comparator was explicitly provided, the created SortedArray uses
 native JavaScript <code>&lt;</code> and <code>&gt;</code> comparisons to sort elements
 in ascending order.</p>
 <p>These functions also accept an optional equality function.
-An equality function should return a truthy value when its two
-arguments represent identical values, and a falsey value otherwise.
-This function <code>valuesEqual(arrayElement, value)</code> determines, for example,
-whether <code>array.indexOf(value)</code> should return the index of <code>arrayElement</code>.
-When no value equality function is provided, a
+An equality function returns a truthy value when its two
+arguments represent equivalent values, and a falsey value otherwise.
+This function determines what array items are considered equivalent in
+calls to, for example, <code>sortedArray.indexOf(value)</code>.
+When no value equality function was explicitly provided, then a
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness">SameValueZero</a>
-implementation is used by default.</p>
+strict equality implementation is used by default.</p>
+<p>The SortedArray implementation assumes that any values <code>a</code> and <code>b</code>
+for which <code>equalityFunc(a, b) === true</code>,
+it is also the case that <code>compareFunc(a, b) === 0</code>.
+Providing functions that violate this assumption may cause
+unexpected behavior.</p>
 <p>When an existing SortedArray is passed to the SortedArray constructor,
 if the call to the constructor did not specify either the comparator
 or the value equality function, then the corresponding functions belonging
@@ -66,31 +98,20 @@ Passing values to these methods that are not correctly sorted will
 cause the SortedArray to behave incorrectly, so use them with care!</p>
 <pre><code class="language-js"><span class="hl-5">array</span><span class="hl-1"> = </span><span class="hl-5">SortedArray</span><span class="hl-1">.</span><span class="hl-3">ofSorted</span><span class="hl-1">(</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">);                      </span><span class="hl-7">// [1, 2, 3]</span><br/><span class="hl-5">array</span><span class="hl-1"> = </span><span class="hl-5">SortedArray</span><span class="hl-1">.</span><span class="hl-3">fromSorted</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">]);                  </span><span class="hl-7">// [1, 2, 3]</span><br/><span class="hl-5">array</span><span class="hl-1"> = </span><span class="hl-5">SortedArray</span><span class="hl-1">.</span><span class="hl-3">fromSorted</span><span class="hl-1">([</span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">], (</span><span class="hl-5">a</span><span class="hl-1">, </span><span class="hl-5">b</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">b</span><span class="hl-1"> - </span><span class="hl-5">a</span><span class="hl-1">); </span><span class="hl-7">// [3, 2, 1]</span><br/><span class="hl-5">array</span><span class="hl-1"> = </span><span class="hl-5">SortedArray</span><span class="hl-1">.</span><span class="hl-3">fromSorted</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-4">&quot;2&quot;</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">],                 </span><span class="hl-7">// [1, &quot;2&quot;, 3]</span><br/><span class="hl-1">    (</span><span class="hl-5">a</span><span class="hl-1">, </span><span class="hl-5">b</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> +</span><span class="hl-5">a</span><span class="hl-1"> - +</span><span class="hl-5">b</span><span class="hl-1">, (</span><span class="hl-5">a</span><span class="hl-1">, </span><span class="hl-5">b</span><span class="hl-1">) </span><span class="hl-0">=&gt;</span><span class="hl-1"> </span><span class="hl-5">a</span><span class="hl-1"> == </span><span class="hl-5">b</span><br/><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
-<p>SortedArrays have a <code>length</code> property and can be indexed and enumerated
-just like normal Arrays.</p>
-<pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">SortedArray</span><span class="hl-1">([</span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">]); </span><span class="hl-7">// [1, 2, 3, 4]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">] </span><span class="hl-7">// 1</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-5">length</span><span class="hl-1"> </span><span class="hl-7">// 4</span><br/><span class="hl-8">for</span><span class="hl-1">(</span><span class="hl-0">let</span><span class="hl-1"> </span><span class="hl-5">element</span><span class="hl-1"> </span><span class="hl-0">of</span><span class="hl-1"> </span><span class="hl-5">sortedArray</span><span class="hl-1">){} </span><span class="hl-7">// 1, 2, 3, 4</span>
+<a id="md:using-a-sortedarray" class="tsd-anchor"></a><h3><a href="#md:using-a-sortedarray">Using a SortedArray</a></h3><p>SortedArrays have a <code>length</code> property and can be indexed and enumerated
+like normal Arrays.</p>
+<pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">SortedArray</span><span class="hl-1">([</span><span class="hl-6">4</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">]); </span><span class="hl-7">// [1, 2, 3, 4]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">] </span><span class="hl-7">// 1</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-5">length</span><span class="hl-1"> </span><span class="hl-7">// 4</span><br/><span class="hl-8">for</span><span class="hl-1">(</span><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">element</span><span class="hl-1"> </span><span class="hl-0">of</span><span class="hl-1"> </span><span class="hl-5">sortedArray</span><span class="hl-1">) {} </span><span class="hl-7">// 1, 2, 3, 4</span>
 </code><button>Copy</button></pre>
 <p>SortedArrays have <code>insert</code> and <code>remove</code> methods. They should be used
 to add and remove elements.
-You should not normally <code>push</code> to a SortedArray, and you should
-consider using <code>remove</code> to be better practice than using <code>indexOf</code>
-and <code>slice</code>, though both options will work.</p>
-<p>The <code>remove</code> method returns <code>true</code> when the value was found in the array
-and removed from it and <code>false</code> otherwise.
-The method is complemented by the <code>removeLast</code> and <code>removeAll</code> methods.
-Where <code>remove</code> removes the first equal value, <code>removeLast</code> removes the
-last equal value.
-<code>removeAll</code> removes all equal values.</p>
+You should not normally <code>push</code> to a SortedArray.
+You should consider using <code>remove</code> to be better practice than using <code>indexOf</code>
+and <code>splice</code>, though either option will work.</p>
 <p>There is also an <code>insertSorted</code> method, which can be used to efficiently
 insert the contents of another iterable which is already sorted according
-to the same comparison function.
+to the same comparator function.
 Passing iterables to the <code>insertSorted</code> method that are not correctly sorted
 will cause the SortedArray to behave incorrectly, so use it with care!</p>
-<p>The <code>getEqualValues</code> method returns all elements in the array equal to
-an input, according to its value equality function. (SameValueZero by default.)
-Where <code>comparator(a, b) === 0</code> does not necessarily imply <code>valuesEqual(a, b)</code>,
-it is important to use this method instead of, for example,
-slicing from <code>indexOf(value)</code> to <code>lastIndexOf(value)</code>.</p>
 <pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">SortedArray</span><span class="hl-1">();</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">insert</span><span class="hl-1">(</span><span class="hl-6">1</span><span class="hl-1">); </span><span class="hl-7">// Insert 1. Returns the new length of the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">insertSorted</span><span class="hl-1">([</span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">, </span><span class="hl-6">3</span><span class="hl-1">, </span><span class="hl-6">4</span><span class="hl-1">]); </span><span class="hl-7">// Insert already-sorted values.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">remove</span><span class="hl-1">(</span><span class="hl-6">1</span><span class="hl-1">); </span><span class="hl-7">// Remove 1. True if the value was in the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">removeLast</span><span class="hl-1">(</span><span class="hl-6">1</span><span class="hl-1">); </span><span class="hl-7">// Remove the last 1. True if successful.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">removeAll</span><span class="hl-1">(</span><span class="hl-6">2</span><span class="hl-1">); </span><span class="hl-7">// Remove all 2. Returns the number of items removed.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">getRemoveAll</span><span class="hl-1">(</span><span class="hl-6">2</span><span class="hl-1">); </span><span class="hl-7">// Remove all 2. Returns a SortedArray.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">getEqualValues</span><span class="hl-1">(</span><span class="hl-6">3</span><span class="hl-1">); </span><span class="hl-7">// Get a SortedArray of values equal to 3.</span>
 </code><button>Copy</button></pre>
 <p>SortedArrays support all of the standard ES6 Array methods and
@@ -111,21 +132,9 @@ operations to use the same new ordering.</p>
 an exact element in the array all use
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness">SameValueZero</a>
 for comparisons by default.
-A different value equality function can be passed as an argument to the
-<code>SortedArray</code> constructor or to the <code>from</code> and <code>fromSorted</code> static methods.</p>
+A different value equality function can be passed as an argument
+when creating a new SortedArray.</p>
 <pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">concat</span><span class="hl-1">(); </span><span class="hl-7">// Returns a new, concatenated Array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">copyWithin</span><span class="hl-1">(); </span><span class="hl-7">// Copies elements. [!]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">entries</span><span class="hl-1">(); </span><span class="hl-7">// Returns an iterator of [index, value] pairs.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">every</span><span class="hl-1">(); </span><span class="hl-7">// True when every element satisfies the predicate.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">fill</span><span class="hl-1">(); </span><span class="hl-7">// Fill the array with values. [!]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">filter</span><span class="hl-1">(); </span><span class="hl-7">// Returns a new, filtered SortedArray.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">find</span><span class="hl-1">(); </span><span class="hl-7">// Get the first matching element.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">findIndex</span><span class="hl-1">(); </span><span class="hl-7">// Get the index of the first matching element.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">flat</span><span class="hl-1">(); </span><span class="hl-7">// Returns a flattened Array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">flatMap</span><span class="hl-1">(); </span><span class="hl-7">// Returns a flattened mapped Array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">forEach</span><span class="hl-1">(); </span><span class="hl-7">// Invokes for every element in the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">includes</span><span class="hl-1">(); </span><span class="hl-7">// True when a value is in the array. [%]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">indexOf</span><span class="hl-1">(); </span><span class="hl-7">// First index of value, or -1 if not present. [%]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">join</span><span class="hl-1">(); </span><span class="hl-7">// Join elements to produce a string.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">keys</span><span class="hl-1">(); </span><span class="hl-7">// Returns an iterator of indexes in the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">lastIndexOf</span><span class="hl-1">(); </span><span class="hl-7">// Last index of value; -1 if not present. [%]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">map</span><span class="hl-1">(); </span><span class="hl-7">// Map elements in the array to produce a new Array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">pop</span><span class="hl-1">(); </span><span class="hl-7">// Remove and return the last element in the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">push</span><span class="hl-1">(); </span><span class="hl-7">// Append a new element to the end of the array. [!]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">reduce</span><span class="hl-1">(); </span><span class="hl-7">// Reduce the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">reduceRight</span><span class="hl-1">(); </span><span class="hl-7">// Reduce the array, backwards.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">reverse</span><span class="hl-1">(); </span><span class="hl-7">// Reverse and permanently invert sort order.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">shift</span><span class="hl-1">(); </span><span class="hl-7">// Remove and return the first element in the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">slice</span><span class="hl-1">(); </span><span class="hl-7">// Get a slice as another SortedArray.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">some</span><span class="hl-1">(); </span><span class="hl-7">// True if any element matches a predicate.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">sort</span><span class="hl-1">(); </span><span class="hl-7">// Re-sort and update the array with a new comparator.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">splice</span><span class="hl-1">(); </span><span class="hl-7">// Remove and/or insert elements in the array. [!]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">toLocaleString</span><span class="hl-1">(); </span><span class="hl-7">// Get a localized string representation.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">toString</span><span class="hl-1">(); </span><span class="hl-7">// Get a string representation of the array.</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">unshift</span><span class="hl-1">(); </span><span class="hl-7">// Prepend value to the start of the array. [!]</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">values</span><span class="hl-1">(); </span><span class="hl-7">// Returns an iterator of values in the array.</span>
-</code><button>Copy</button></pre>
-<p>Also of interest are the <code>firstInsertionIndexOf</code> and <code>lastInsertionIndexOf</code>
-methods. These return the first index and the last index, respectively,
-where a value can be found or should be inserted into the array.</p>
-<pre><code class="language-js"><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">firstInsertionIndexOf</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">lastInsertionIndexOf</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span>
-</code><button>Copy</button></pre>
-<p>Some operations, if used carelessly, can cause the SortedArray&#39;s
-contents to no longer be in sorted order. <strong>DON&#39;T DO THIS!</strong>
-Invalidating the SortedArray&#39;s assumption that its contents are
-always in a sorted order will cause incorrect behavior.
-Use these tools with care!</p>
-<pre><code class="language-js"><span class="hl-7">// USE WITH CAUTION!</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">] = </span><span class="hl-5">x</span><span class="hl-1">;</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-5">length</span><span class="hl-1"> = </span><span class="hl-5">x</span><span class="hl-1">;</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">push</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">unshift</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">splice</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-5">x</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">fill</span><span class="hl-1">(</span><span class="hl-5">x</span><span class="hl-1">, </span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">);</span><br/><span class="hl-5">sortedArray</span><span class="hl-1">.</span><span class="hl-3">copyWithin</span><span class="hl-1">(</span><span class="hl-6">0</span><span class="hl-1">, </span><span class="hl-6">1</span><span class="hl-1">, </span><span class="hl-6">2</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 </div></div>
 <div class="col-sidebar">
@@ -153,7 +162,12 @@ Use these tools with care!</p>
 <li>
 <ul>
 <li><a href="#md:installation"><span>Installation</span></a></li>
-<li><a href="#md:documentation"><span>Documentation</span></a></li></ul></li></ul></li></ul></div></details></div>
+<li><a href="#md:documentation"><span>Documentation</span></a></li>
+<li>
+<ul>
+<li><a href="#md:abusing-a-sortedarray"><span>Abusing a <wbr/>Sorted<wbr/>Array</span></a></li>
+<li><a href="#md:creating-a-sortedarray"><span>Creating a <wbr/>Sorted<wbr/>Array</span></a></li>
+<li><a href="#md:using-a-sortedarray"><span>Using a <wbr/>Sorted<wbr/>Array</span></a></li></ul></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg><span>SortedArray</span></a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".">

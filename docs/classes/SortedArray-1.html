@@ -45,8 +45,8 @@ operations to behave in unexpected ways.</p>
 <ul class="tsd-hierarchy">
 <li><span class="target">SortedArray</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L94">src/index.ts:94</a></li>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L1041">src/index.ts:1041</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L94">src/index.ts:94</a></li>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L1073">src/index.ts:1073</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -88,6 +88,7 @@ operations to behave in unexpected ways.</p>
 <a href="SortedArray-1.html#indexOfRange" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>index<wbr/>Of<wbr/>Range</span></a>
 <a href="SortedArray-1.html#insert" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>insert</span></a>
 <a href="SortedArray-1.html#insertSorted" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>insert<wbr/>Sorted</span></a>
+<a href="SortedArray-1.html#isSorted" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Sorted</span></a>
 <a href="SortedArray-1.html#join-1" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>join</span></a>
 <a href="SortedArray-1.html#keys-1" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>keys</span></a>
 <a href="SortedArray-1.html#lastIndexOf-1" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>last<wbr/>Index<wbr/>Of</span></a>
@@ -101,6 +102,7 @@ operations to behave in unexpected ways.</p>
 <a href="SortedArray-1.html#remove" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove</span></a>
 <a href="SortedArray-1.html#removeAll" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove<wbr/>All</span></a>
 <a href="SortedArray-1.html#removeLast" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove<wbr/>Last</span></a>
+<a href="SortedArray-1.html#resort" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>resort</span></a>
 <a href="SortedArray-1.html#reverse-1" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>reverse</span></a>
 <a href="SortedArray-1.html#shift-1" class="tsd-index-link tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>shift</span></a>
 <a href="SortedArray-1.html#slice-1" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>slice</span></a>
@@ -136,7 +138,7 @@ and equality functions.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array&lt;T&gt;.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L106">src/index.ts:106</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L106">src/index.ts:106</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_SortedArray-1"><span class="tsd-kind-constructor-signature">new <wbr/>Sorted<wbr/>Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">length</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><a href="#constructor.new_SortedArray-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Construct a new SortedArray with the given length.</p>
@@ -155,7 +157,7 @@ and equality functions.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array&lt;T&gt;.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L110">src/index.ts:110</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L110">src/index.ts:110</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_SortedArray-2"><span class="tsd-kind-constructor-signature">new <wbr/>Sorted<wbr/>Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">compareFunc</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">equalityFunc</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><a href="#constructor.new_SortedArray-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Construct a new empty SortedArray, optionally specifying a
@@ -190,7 +192,7 @@ the array.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array&lt;T&gt;.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L126">src/index.ts:126</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L126">src/index.ts:126</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="constructor.new_SortedArray-3"><span class="tsd-kind-constructor-signature">new <wbr/>Sorted<wbr/>Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">items</span>, <span class="tsd-kind-parameter">compareFunc</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">equalityFunc</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><a href="#constructor.new_SortedArray-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Construct a new SortedArray from the given items, which will
@@ -233,7 +235,7 @@ the array.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array&lt;T&gt;.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L149">src/index.ts:149</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L149">src/index.ts:149</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="_unscopables_" class="tsd-anchor"></a>
@@ -267,7 +269,7 @@ when they will be absent when used in a &#39;with&#39; statement.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L98">src/index.ts:98</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L98">src/index.ts:98</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member"><a id="equalityFunc" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>equality<wbr/>Func</span><a href="#equalityFunc" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">equality<wbr/>Func</span><span class="tsd-signature-symbol">:</span> <a href="../types/SortedArrayEqualityFunction.html" class="tsd-signature-type tsd-kind-type-alias">SortedArrayEqualityFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span></div>
@@ -275,7 +277,7 @@ when they will be absent when used in a &#39;with&#39; statement.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L96">src/index.ts:96</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L96">src/index.ts:96</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="length-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>length</span><a href="#length-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">length</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
@@ -292,7 +294,7 @@ when they will be absent when used in a &#39;with&#39; statement.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L100">src/index.ts:100</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L100">src/index.ts:100</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="_species_" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>[species]</span><a href="#_species_" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">[species]</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">ArrayConstructor</span></div><aside class="tsd-sources">
@@ -356,7 +358,7 @@ behavior.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.concat</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L953">src/index.ts:953</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L985">src/index.ts:985</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="copyWithin-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>copy<wbr/>Within</span><a href="#copyWithin-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -555,7 +557,7 @@ function should be called with.</p>
 </div><aside class="tsd-sources">
 <p>Overrides Array.filter</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L810">src/index.ts:810</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L810">src/index.ts:810</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="find-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>find</span><a href="#find-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -711,7 +713,7 @@ Defaults to the length of the array.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L601">src/index.ts:601</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L601">src/index.ts:601</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="flat-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>flat</span><a href="#flat-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -746,7 +748,7 @@ Defaults to <code>1</code>.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.flat</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L974">src/index.ts:974</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L1006">src/index.ts:1006</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="flatMap-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>flat<wbr/>Map</span><a href="#flatMap-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -784,7 +786,7 @@ the new array.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.flatMap</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L1002">src/index.ts:1002</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L1034">src/index.ts:1034</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="forEach-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>for<wbr/>Each</span><a href="#forEach-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -848,7 +850,7 @@ otherwise specified.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L572">src/index.ts:572</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L572">src/index.ts:572</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getRemoveAll" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Remove<wbr/>All</span><a href="#getRemoveAll" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -873,7 +875,7 @@ to this input value.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L542">src/index.ts:542</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L542">src/index.ts:542</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="includes-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>includes</span><a href="#includes-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -905,7 +907,7 @@ if not.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.includes</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L793">src/index.ts:793</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L793">src/index.ts:793</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="indexOf-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>index<wbr/>Of</span><a href="#indexOf-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -938,7 +940,7 @@ item was found.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.indexOf</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L675">src/index.ts:675</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L675">src/index.ts:675</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="indexOfRange" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>index<wbr/>Of<wbr/>Range</span><a href="#indexOfRange" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -976,7 +978,7 @@ item was found.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L697">src/index.ts:697</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L697">src/index.ts:697</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="insert" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>insert</span><a href="#insert" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -997,7 +999,7 @@ item was found.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L348">src/index.ts:348</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L348">src/index.ts:348</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="insertSorted" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>insert<wbr/>Sorted</span><a href="#insertSorted" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1023,7 +1025,21 @@ same comparator.</p>
 <h4>Throws</h4><p>TypeError if the input was not iterable.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L368">src/index.ts:368</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L368">src/index.ts:368</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="isSorted" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>is<wbr/>Sorted</span><a href="#isSorted" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="isSorted.isSorted-1"><span class="tsd-kind-call-signature">is<wbr/>Sorted</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#isSorted.isSorted-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Check whether the contents of the array are in fact sorted as
+expected.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><p><code>true</code> when the contents of the array are correctly
+sorted according to its comparator function, or <code>false</code> otherwise.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L921">src/index.ts:921</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="join-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>join</span><a href="#join-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -1092,7 +1108,7 @@ item was found.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.lastIndexOf</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L738">src/index.ts:738</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L738">src/index.ts:738</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="lastIndexOfRange" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>last<wbr/>Index<wbr/>Of<wbr/>Range</span><a href="#lastIndexOfRange" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1130,7 +1146,7 @@ item was found.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L760">src/index.ts:760</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L760">src/index.ts:760</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="lastInsertionIndexOf" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>last<wbr/>Insertion<wbr/>Index<wbr/>Of</span><a href="#lastInsertionIndexOf" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1165,7 +1181,7 @@ Defaults to the length of the array.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L637">src/index.ts:637</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L637">src/index.ts:637</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="map-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>map</span><a href="#map-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1202,7 +1218,7 @@ the transformation function.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.map</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L1029">src/index.ts:1029</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L1061">src/index.ts:1061</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="pop-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>pop</span><a href="#pop-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -1482,7 +1498,7 @@ or <code>false</code> if no matching element was found.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L465">src/index.ts:465</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L465">src/index.ts:465</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="removeAll" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove<wbr/>All</span><a href="#removeAll" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1506,7 +1522,7 @@ to this input value.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L512">src/index.ts:512</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L512">src/index.ts:512</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="removeLast" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove<wbr/>Last</span><a href="#removeLast" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1531,7 +1547,24 @@ or <code>false</code> if no matching element was found.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L489">src/index.ts:489</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L489">src/index.ts:489</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="resort" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>resort</span><a href="#resort" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="resort.resort-1"><span class="tsd-kind-call-signature">resort</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><a href="#resort.resort-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Forcibly re-sort the array using its previously assigned comparator
+function. This might be used to repair the array, if its items are
+no longer guaranteed to be in correct sorted order.</p>
+<p>The array items will be sorted using the Array <code>sort</code> function.
+This is not guaranteed to be stable in all cases. See:
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability</a></p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4><p>this SortedArray.</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L909">src/index.ts:909</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="reverse-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>reverse</span><a href="#reverse-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1547,7 +1580,7 @@ sort order.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.reverse</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L836">src/index.ts:836</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L836">src/index.ts:836</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="shift-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>shift</span><a href="#shift-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -1589,7 +1622,7 @@ Defaults to the length of the array.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.slice</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L862">src/index.ts:862</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L862">src/index.ts:862</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="some-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>some</span><a href="#some-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -1638,7 +1671,7 @@ If thisArg is omitted, undefined is used as the this value.</p>
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="sort-1.sort-2"><span class="tsd-kind-call-signature">sort</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">compareFunc</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><a href="#sort-1.sort-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Re-sort the list and assign a new comparator function.</p>
+<div class="tsd-comment tsd-typography"><p>Re-sort the array and assign a new comparator function.</p>
 <p>The array items will be sorted using the Array <code>sort</code> function.
 This is not guaranteed to be stable in all cases. See:
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability</a></p>
@@ -1659,7 +1692,7 @@ if no comparator function is specified.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.sort</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L887">src/index.ts:887</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L887">src/index.ts:887</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="splice-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>splice</span><a href="#splice-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1685,7 +1718,7 @@ if no comparator function is specified.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.splice</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L906">src/index.ts:906</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L938">src/index.ts:938</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="splice-1.splice-3"><span class="tsd-kind-call-signature">splice</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">start</span>, <span class="tsd-kind-parameter">deleteCount</span>, <span class="tsd-signature-symbol">...</span><span class="tsd-kind-parameter">items</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SortedArray-1.html" class="tsd-signature-type tsd-kind-class">SortedArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><a href="#splice-1.splice-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Remove items from the array, starting at a given index, and
@@ -1720,7 +1753,7 @@ can be inserted without violating the sort order of the SortedArray.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.splice</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L924">src/index.ts:924</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L956">src/index.ts:956</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="toLocaleString-1" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Locale<wbr/>String</span><a href="#toLocaleString-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -1817,7 +1850,7 @@ values in sorted order.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.from</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L292">src/index.ts:292</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L292">src/index.ts:292</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fromSorted" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Sorted</span><a href="#fromSorted" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1860,7 +1893,7 @@ assumed-sorted values.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L317">src/index.ts:317</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L317">src/index.ts:317</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="isArray" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>is<wbr/>Array</span><a href="#isArray" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -1902,7 +1935,7 @@ values in sorted order.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides Array.of</p>
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L256">src/index.ts:256</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L256">src/index.ts:256</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="ofSorted" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>of<wbr/>Sorted</span><a href="#ofSorted" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -1932,7 +1965,7 @@ assumed-sorted values.</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/bedba2f/src/index.ts#L272">src/index.ts:272</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/pineapplemachine/sorted-array-type-js/blob/28a34c8/src/index.ts#L272">src/index.ts:272</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -1980,6 +2013,7 @@ assumed-sorted values.</p>
 <li><a href="#indexOfRange" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>index<wbr/>Of<wbr/>Range</span></a></li>
 <li><a href="#insert" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>insert</span></a></li>
 <li><a href="#insertSorted" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>insert<wbr/>Sorted</span></a></li>
+<li><a href="#isSorted" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Sorted</span></a></li>
 <li><a href="#join-1" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>join</span></a></li>
 <li><a href="#keys-1" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>keys</span></a></li>
 <li><a href="#lastIndexOf-1" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>last<wbr/>Index<wbr/>Of</span></a></li>
@@ -1993,6 +2027,7 @@ assumed-sorted values.</p>
 <li><a href="#remove" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove</span></a></li>
 <li><a href="#removeAll" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove<wbr/>All</span></a></li>
 <li><a href="#removeLast" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove<wbr/>Last</span></a></li>
+<li><a href="#resort" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>resort</span></a></li>
 <li><a href="#reverse-1" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>reverse</span></a></li>
 <li><a href="#shift-1" class="tsd-is-inherited tsd-is-external"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>shift</span></a></li>
 <li><a href="#slice-1" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>slice</span></a></li>
