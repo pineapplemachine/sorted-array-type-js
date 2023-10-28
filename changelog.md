@@ -15,9 +15,11 @@ imported using `const {SortedArray} = require("sorted-array-type");`.
 - Use GitHub actions instead of Travis CI for automated tests.
 - Add coveralls test coverage report.
 - Fix behavior of some SortedArray methods with array-like object inputs.
-- Add `indexOfRange` and `lastIndexOfRange` methods.
 - Change `removeAll` to return the number of removed items instead of a list.
 - Add `getRemoveAll` method which reproduces the old behavior of `removeAll`.
+- Add `indexOfRange` and `lastIndexOfRange` methods.
+- Add `isSorted` method to check if the array contents are correctly sorted.
+- Add `resort` method which forcibly sorts and repairs the contents of the array.
 
 # v1.2.1
 
