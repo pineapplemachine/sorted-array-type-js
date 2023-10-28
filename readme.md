@@ -92,12 +92,15 @@ sortedArray.fill(x, 0, 1);
 sortedArray.copyWithin(0, 1, 2);
 ```
 
-Note that the SortedArray type provides a `sort` method which can be
-used to right prior wrongs and ensure that the array's contents are
-now definitely in the expected sorted order.
+Note that the SortedArray type provides an `isSorted` method which
+may be used to check whether the array's contents are correctly sorted
+and a `resort` method which may be used to forcibly re-sort the contents
+of the list and put them into the right order, if they weren't already.
+You should not normally need these methods!
 
 ``` js
-sortedArray.sort();
+sortedArray.isSorted();
+sortedArray.resort();
 ```
 
 Also of interest to those intending to do more advanced operations on

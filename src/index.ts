@@ -870,7 +870,7 @@ export class SortedArray<T> extends Array<T> {
     }
     
     /**
-     * Re-sort the list and assign a new comparator function.
+     * Re-sort the array and assign a new comparator function.
      * 
      * The array items will be sorted using the Array `sort` function.
      * This is not guaranteed to be stable in all cases. See:
@@ -893,6 +893,38 @@ export class SortedArray<T> extends Array<T> {
         this.reversedCompareFunc = undefined;
         super.sort(compareFunc);
         return this;
+    }
+    
+    /**
+     * Forcibly re-sort the array using its previously assigned comparator
+     * function. This might be used to repair the array, if its items are
+     * no longer guaranteed to be in correct sorted order.
+     * 
+     * The array items will be sorted using the Array `sort` function.
+     * This is not guaranteed to be stable in all cases. See:
+     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability
+     * 
+     * @returns this SortedArray.
+     */
+    resort(): this {
+        super.sort(this.compareFunc);
+        return this;
+    }
+    
+    /**
+     * Check whether the contents of the array are in fact sorted as
+     * expected.
+     * 
+     * @returns `true` when the contents of the array are correctly
+     * sorted according to its comparator function, or `false` otherwise.
+     */
+    isSorted(): boolean {
+        for(let i: number = 1; i < this.length; i++) {
+            if(this.compareFunc(this[i - 1], this[i]) > 0) {
+                return false;
+            }
+        }
+        return true;
     }
     
     /**

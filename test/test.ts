@@ -999,6 +999,17 @@ canary.test("sort", function() {
     array.remove(1);
     assertArray(array, [2, 3, 5, 6]);
 });
+canary.test("resort and isSorted", function() {
+    const array = new SortedArray([1, 2, 3, 4, 5, 6]);
+    assert.equal(array.isSorted(), true);
+    // Break array sort - Don't do this!
+    array.push(9, 8, 7);
+    assert.equal(array.isSorted(), false);
+    array.resort();
+    assertArray(array, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    assert.equal(array.indexOf(7), 6);
+    assert.equal(array.isSorted(), true);
+});
 canary.test("splice", function() {
     const array = new SortedArray([4, 3, 2, 1], (a, b) => b - a);
     const splice = array.splice(1, 2);
