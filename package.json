@@ -39,6 +39,7 @@
         "array.prototype.flatmap": "1.2.1",
         "canary-test": "1.1.2",
         "nyc": "15.1.0",
+        "source-map-support": "^0.5.21",
         "typedoc": "0.25.2",
         "typescript": "5.2.2"
     },
@@ -46,7 +47,9 @@
         "test": "npm rum build && node dist/test/test.js",
         "build": "npx tsc",
         "typedoc": "npx typedoc",
-        "coverage": "nyc npm run test",
+        "coverage": "npx nyc --reporter lcov npm run test",
+        "coverage-lcov": "npx nyc npm run test",
+        "coverage-report": "npx nyc report --reporter html",
         "prepublish": "npm run coverage"
     }
 }
