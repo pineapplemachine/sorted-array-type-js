@@ -1,0 +1,10 @@
+# Set all files to have LF line endings
+* text eol=lf
+*.txt text
+*.json text
+*.yaml text
+*.yml text
+*.md text
+*.html text
+*.js text
+*.ts text

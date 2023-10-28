@@ -1,0 +1,8 @@
+{
+    "entryPoints": ["src/index.ts"],
+    "entryPointStrategy": "Expand",
+    "out": "docs",
+    "tsconfig": "./tsconfig.json",
+    "name": "SortedArray",
+    "gitRemote": "origin"
+}
