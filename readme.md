@@ -1,6 +1,9 @@
 # SortedArray
 
-[![MIT License][license-image]][license] [![Build Status][travis-image]][travis-url] [![NPM version][npm-version-image]][npm-url]
+[![Zlib License][license-image]][license]
+[![NPM version][npm-version-image]][npm-url]
+[![Test Status][ci-image]][ci-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
 This package implements a **SortedArray** type, which is an array
 whose contents are always sorted.
@@ -8,12 +11,12 @@ It supports all standard ES6 Array methods and it provides
 additional methods relating to keeping elements in a sorted order.
 It fully supports indexing, enumeration, and a length property.
 
-The package is licensed according to the permissive
+The package is licensed according to the permissive open source
 [zlib/libpng license](LICENSE).
 
 Note that the SortedArray type uses the native `Array.sort`
-method for some functionality, meaning that sort stability
-will depend on the platform.
+method for some functionality, meaning that sort stability will
+[depend on the platform](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability).
 If `Array.sort` is stable, however, then all SortedArray sort
 and insertion operations will also be stable.
 
@@ -22,7 +25,7 @@ const sortedArray = new SortedArray(["alice", "carl", "bob"]);
 sortedArray[1]; // "bob"
 sortedArray.length; // 3
 sortedArray.insert("beatrice"); // ["alice", "beatrice", "bob", "carl"]
-sortedArray.indexOf("bob"); // 2 (uses binary search)
+sortedArray.indexOf("bob"); // 2 (uses optimized search)
 sortedArray.pop(); // "carl"
 sortedArray.slice(0, 2); // SortedArray(["alice", "beatrice"])
 ```
@@ -30,8 +33,11 @@ sortedArray.slice(0, 2); // SortedArray(["alice", "beatrice"])
 [license-image]: https://img.shields.io/badge/License-Zlib-lightgrey.svg
 [license]: https://github.com/pineapplemachine/sorted-array-type-js/blob/master/LICENSE
 
-[travis-url]: https://travis-ci.org/pineapplemachine/sorted-array-type-js
-[travis-image]: https://travis-ci.org/pineapplemachine/sorted-array-type-js.svg?branch=master
+[ci-url]: https://github.com/pineapplemachine/sorted-array-type-js/actions/workflows/test.yml
+[ci-image]: https://github.com/pineapplemachine/sorted-array-type-js/actions/workflows/test.yml/badge.svg
+
+[coveralls-url]: https://coveralls.io/github/pineapplemachine/sorted-array-type-js
+[coveralls-image]: https://coveralls.io/repos/github/pineapplemachine/sorted-array-type-js/badge.svg?branch=master
 
 [npm-url]: https://www.npmjs.com/package/sorted-array-type
 [npm-version-image]: https://badge.fury.io/js/sorted-array-type.svg
@@ -57,8 +63,8 @@ import SortedArray from "sorted-array-type";
 
 ## Documentation
 
-You can create a SortedArray object using the constructor or
-using the `of` and `from` class methods.
+You can create a SortedArray object using the class constructor or
+using the `of` and `from` static class methods.
 
 The constructor and the `from` static method accept an optional
 [comparator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort).
@@ -66,8 +72,8 @@ If no comparator was given, the created SortedArray uses
 native JavaScript `<` and `>` comparisons to sort elements
 in ascending order.
 
-These functions also accept an optional value equality function.
-A value equality function should return a truthy value when its two
+These functions also accept an optional equality function.
+An equality function should return a truthy value when its two
 arguments represent identical values, and a falsey value otherwise.
 This function `valuesEqual(arrayElement, value)` determines, for example,
 whether `array.indexOf(value)` should return the index of `arrayElement`.
