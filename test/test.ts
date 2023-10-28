@@ -1,17 +1,4 @@
-// TODO
-// if(typeof(Array.prototype.flat) !== "function") {
-//     require('array.prototype.flat').shim();
-// }
-// if(typeof(Array.prototype.flatMap) !== "function") {
-//     require('array.prototype.flatmap').shim();
-// }
-// if(typeof(Array.prototype.values) !== "function") {
-//     Array.prototype.values = function* values() {
-//         for(let element of this) {
-//             yield element;
-//         }
-//     };
-// }
+require("source-map-support").install();
 
 import {strict as assert} from "node:assert";
 
@@ -191,6 +178,10 @@ canary.group("construction", function() {
         const generator = function*() {yield 1; yield 2; yield 3;};
         assertArray(SortedArray.fromSorted(generator()), [1, 2, 3]);
     });
+    this.test("fromSorted array-like object", function() {
+        const arrayLike = {length: 3, 0: 1, 1: 2, 2: 3};
+        assertArray(SortedArray.fromSorted(arrayLike), [1, 2, 3]);
+    });
 });
 
 canary.group("insertion", function() {
@@ -222,19 +213,21 @@ canary.group("insertion", function() {
     });
     this.test("insertSorted", function() {
         const array = new SortedArray([10, 20, 30, 40]);
-        array.insertSorted([5, 15, 25, 45]);
+        const newLength = array.insertSorted([5, 15, 25, 45]);
         assertArray(array, [5, 10, 15, 20, 25, 30, 40, 45]);
+        assert.equal(newLength, array.length);
+        assert.equal(array.length, 8);
     });
     this.test("insertSorted empty input", function() {
         const array = new SortedArray([1, 2, 3]);
         // Empty array
-        array.insertSorted([]);
+        assert.equal(array.insertSorted([]), 3);
         assertArray(array, [1, 2, 3]);
         // Empty generator
-        array.insertSorted(function*() {}());
+        assert.equal(array.insertSorted(function*() {}()), 3);
         assertArray(array, [1, 2, 3]);
         // Empty array-like object
-        array.insertSorted({length: 0});
+        assert.equal(array.insertSorted({length: 0}), 3);
         assertArray(array, [1, 2, 3]);
     });
     this.test("insertSorted duplicate values", function() {
@@ -248,7 +241,6 @@ canary.group("insertion", function() {
         array.insertSorted(gen());
         assertArray(array, [1, 2, 3, 4, 5]);
     });
-    // TODO: other array-like objects?
     this.test("insertSorted \"arguments\" array-like object", function() {
         const array = new SortedArray([1, 2, 4]);
         const insertArgs = function(...i: number[]) {
@@ -269,17 +261,46 @@ canary.group("insertion", function() {
     });
     this.test("insertSorted all prepended", function() {
         const array = new SortedArray([4, 5, 6]);
-        array.insertSorted([1, 2, 3]);
+        assert.equal(array.insertSorted([1, 2, 3]), 6);
         assertArray(array, [1, 2, 3, 4, 5, 6]);
     });
     this.test("insertSorted all appended", function() {
         const array = new SortedArray([1, 2, 3]);
-        array.insertSorted([4, 5, 6]);
+        assert.equal(array.insertSorted([4, 5, 6]), 6);
         assertArray(array, [1, 2, 3, 4, 5, 6]);
     });
     this.test("insertSorted contiguous sub-array", function() {
         const array = new SortedArray([1, 2, 6, 7]);
-        array.insertSorted([3, 4, 5]);
+        assert.equal(array.insertSorted([3, 4, 5]), 7);
+        assertArray(array, [1, 2, 3, 4, 5, 6, 7]);
+    });
+    this.test("insertSorted prepend and append", function() {
+        const array = new SortedArray([3, 4]);
+        assert.equal(array.insertSorted([1, 2, 5, 6, 7]), 7);
+        assertArray(array, [1, 2, 3, 4, 5, 6, 7]);
+    });
+    this.test("insertSorted array-like object all prepended", function() {
+        const arrayLike = {length: 3, 0: 1, 1: 2, 2: 3};
+        const array = new SortedArray([4, 5, 6]);
+        assert.equal(array.insertSorted(arrayLike), 6);
+        assertArray(array, [1, 2, 3, 4, 5, 6]);
+    });
+    this.test("insertSorted array-like object all appended", function() {
+        const arrayLike = {length: 3, 0: 4, 1: 5, 2: 6};
+        const array = new SortedArray([1, 2, 3]);
+        assert.equal(array.insertSorted(arrayLike), 6);
+        assertArray(array, [1, 2, 3, 4, 5, 6]);
+    });
+    this.test("insertSorted array-like object contiguous sub-array", function() {
+        const arrayLike = {length: 3, 0: 3, 1: 4, 2: 5};
+        const array = new SortedArray([1, 2, 6, 7]);
+        assert.equal(array.insertSorted(arrayLike), 7);
+        assertArray(array, [1, 2, 3, 4, 5, 6, 7]);
+    });
+    this.test("insertSorted array-like object prepend and append", function() {
+        const arrayLike = {length: 5, 0: 1, 1: 2, 2: 5, 3: 6, 4: 7};
+        const array = new SortedArray([3, 4]);
+        assert.equal(array.insertSorted(arrayLike), 7);
         assertArray(array, [1, 2, 3, 4, 5, 6, 7]);
     });
     this.test("insert sorting stability", function() {
@@ -394,7 +415,42 @@ canary.group("removal", function() {
         assert.equal(array.removeLast(-0), true);
         assertArray(array, []);
     });
-    // TODO: removeAll
+    this.test("removeAll", function() {
+        const array = SortedArray.ofSorted(1, 1, 1, 2, 3);
+        assert.equal(array.removeAll(2), 1);
+        assertArray(array, [1, 1, 1, 3]);
+        assert.equal(array.removeAll(1), 3);
+        assertArray(array, [3]);
+        assert.equal(array.removeAll(4), 0);
+        assertArray(array, [3]);
+        assert.equal(array.removeAll(3), 1);
+        assertArray(array, []);
+    });
+    this.test("removeAll NaN", function() {
+        const array = SortedArray.ofSorted(NaN, NaN, NaN);
+        const removedCount = array.removeAll(NaN);
+        assert.equal(removedCount, 3);
+        assertArray(array, []);
+    });
+    this.test("removeAll signed zero", function() {
+        const array = SortedArray.ofSorted(+0, -0);
+        const removedCount = array.removeAll(0);
+        assertArray(array, []);
+        assert.equal(removedCount, 2);
+    });
+    this.test("removeAll with non-contiguous elements", function() {
+        const cmp = (a: any, b: any) => (
+            a[0].toLowerCase().codePointAt(0) -
+            b[0].toLowerCase().codePointAt(0)
+        );
+        const array = SortedArray.fromSorted(
+            ["able", "apple", "ABLE", "ace", "Able", "bear"], cmp,
+            (a, b) => a.toLowerCase() === b.toLowerCase()
+        );
+        const removedCount = array.removeAll("able");
+        assertArray(array, ["apple", "ace", "bear"]);
+        assert.equal(removedCount, 3);
+    });
     this.test("getRemoveAll", function() {
         const array = SortedArray.ofSorted(1, 1, 1, 2, 3);
         assertArray(array.getRemoveAll(2), [2]);
@@ -482,6 +538,7 @@ canary.group("includes", function() {
         assert.equal(array.includes(1, -1), false);
     });
 });
+
 canary.group("indexOf", function() {
     this.test("indexOf", function() {
         const array = new SortedArray([1, 1, 2, 3]);
@@ -528,7 +585,59 @@ canary.group("indexOf", function() {
         assert.equal(array.indexOf(objects[4]), 4);
         assert.equal(array.indexOf(objects[5]), 5);
     });
+    this.test("indexOf parity with Array.indexOf", function() {
+        const arrayPlain = [0, 0, 0, 1, 1, 2, 2, 2];
+        const arraySorted = SortedArray.from(arrayPlain);
+        function assertIndexOfEqual(
+            index: number, value: any, fromIndex: number | undefined,
+        ) {
+            const indexOfSorted = arraySorted.indexOf(value, fromIndex);
+            const indexOfPlain = arrayPlain.indexOf(value, fromIndex);
+            assert.equal(indexOfSorted, index);
+            assert.equal(indexOfSorted, indexOfPlain);
+        }
+        assertIndexOfEqual(0, 0, undefined);
+        assertIndexOfEqual(3, 1, undefined);
+        assertIndexOfEqual(5, 2, undefined);
+        assertIndexOfEqual(0, 0, 0);
+        assertIndexOfEqual(1, 0, 1);
+        assertIndexOfEqual(2, 0, 2);
+        assertIndexOfEqual(-1, 0, 3);
+        assertIndexOfEqual(-1, 0, 4);
+        assertIndexOfEqual(-1, 0, 5);
+        assertIndexOfEqual(-1, 0, 6);
+        assertIndexOfEqual(-1, 0, 7);
+        assertIndexOfEqual(0, 0, -8);
+        assertIndexOfEqual(1, 0, -7);
+        assertIndexOfEqual(2, 0, -6);
+        assertIndexOfEqual(-1, 0, -5);
+        assertIndexOfEqual(-1, 0, -4);
+        assertIndexOfEqual(-1, 0, -3);
+        assertIndexOfEqual(-1, 0, -2);
+        assertIndexOfEqual(-1, 0, -1);
+    });
+    this.test("indexOfRange", function() {
+        const array = new SortedArray([0, 0, 0, 1, 1, 2, 2, 2]);
+        assert.equal(array.indexOfRange(0), 0);
+        assert.equal(array.indexOfRange(1), 3);
+        assert.equal(array.indexOfRange(2), 5);
+        assert.equal(array.indexOfRange(4), -1);
+        assert.equal(array.indexOfRange(<any> "3"), -1);
+        assert.equal(array.indexOfRange(0, 0), 0);
+        assert.equal(array.indexOfRange(0, 1), 1);
+        assert.equal(array.indexOfRange(0, 2), 2);
+        assert.equal(array.indexOfRange(0, 3), -1);
+        assert.equal(array.indexOfRange(2, 0, 7), 5);
+        assert.equal(array.indexOfRange(2, 0, 6), 5);
+        assert.equal(array.indexOfRange(2, 0, 5), 5);
+        assert.equal(array.indexOfRange(2, 0, 4), -1);
+        assert.equal(array.indexOfRange(2, 0, -1), 5);
+        assert.equal(array.indexOfRange(2, 0, -2), 5);
+        assert.equal(array.indexOfRange(2, 0, -3), 5);
+        assert.equal(array.indexOfRange(2, 0, -4), -1);
+    });
 });
+
 canary.group("lastIndexOf", function() {
     this.test("lastIndexOf", function() {
         const array = new SortedArray([1, 1, 2, 3]);
@@ -585,6 +694,59 @@ canary.group("lastIndexOf", function() {
         assert.equal(array.lastIndexOf(objects[3]), 3);
         assert.equal(array.lastIndexOf(objects[4]), 4);
         assert.equal(array.lastIndexOf(objects[5]), 5);
+    });
+    this.test("lastIndexOf parity with Array.lastIndexOf", function() {
+        const arrayPlain = [0, 0, 0, 1, 1, 2, 2, 2];
+        const arraySorted = SortedArray.from(arrayPlain);
+        function assertLastIndexOfEqual(
+            index: number, value: any, fromIndex: number | undefined,
+        ) {
+            const indexOfSorted = arraySorted.lastIndexOf(value, fromIndex);
+            const indexOfPlain = arrayPlain.lastIndexOf(value, fromIndex);
+            assert.equal(indexOfSorted, index);
+            assert.equal(indexOfSorted, indexOfPlain);
+        }
+        // Questionable whether it is a good idea to retain this
+        // behavior of Array.lastIndexOf...
+        // assertLastIndexOfEqual(0, 0, undefined);
+        // assertLastIndexOfEqual(-1, 1, undefined);
+        // assertLastIndexOfEqual(-1, 2, undefined);
+        assertLastIndexOfEqual(-1, 2, 0);
+        assertLastIndexOfEqual(-1, 2, 1);
+        assertLastIndexOfEqual(-1, 2, 2);
+        assertLastIndexOfEqual(-1, 2, 3);
+        assertLastIndexOfEqual(-1, 2, 4);
+        assertLastIndexOfEqual(5, 2, 5);
+        assertLastIndexOfEqual(6, 2, 6);
+        assertLastIndexOfEqual(7, 2, 7);
+        assertLastIndexOfEqual(-1, 2, -8);
+        assertLastIndexOfEqual(-1, 2, -7);
+        assertLastIndexOfEqual(-1, 2, -6);
+        assertLastIndexOfEqual(-1, 2, -5);
+        assertLastIndexOfEqual(-1, 2, -4);
+        assertLastIndexOfEqual(5, 2, -3);
+        assertLastIndexOfEqual(6, 2, -2);
+        assertLastIndexOfEqual(7, 2, -1);
+    });
+    this.test("lastIndexOfRange", function() {
+        const array = new SortedArray([0, 0, 0, 1, 1, 2, 2, 2]);
+        assert.equal(array.lastIndexOfRange(0), 2);
+        assert.equal(array.lastIndexOfRange(1), 4);
+        assert.equal(array.lastIndexOfRange(2), 7);
+        assert.equal(array.lastIndexOfRange(4), -1);
+        assert.equal(array.lastIndexOfRange(<any> "3"), -1);
+        assert.equal(array.lastIndexOfRange(2, 0, 7), 7);
+        assert.equal(array.lastIndexOfRange(2, 0, 6), 6);
+        assert.equal(array.lastIndexOfRange(2, 0, 5), 5);
+        assert.equal(array.lastIndexOfRange(2, 0, 4), -1);
+        assert.equal(array.lastIndexOfRange(2, 0, -1), 7);
+        assert.equal(array.lastIndexOfRange(2, 0, -2), 6);
+        assert.equal(array.lastIndexOfRange(2, 0, -3), 5);
+        assert.equal(array.lastIndexOfRange(2, 0, -4), -1);
+        assert.equal(array.lastIndexOfRange(0, 0), 2);
+        assert.equal(array.lastIndexOfRange(0, 1), 2);
+        assert.equal(array.lastIndexOfRange(0, 2), 2);
+        assert.equal(array.lastIndexOfRange(0, 3), -1);
     });
 });
 

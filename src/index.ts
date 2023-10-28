@@ -34,28 +34,41 @@ function isIterable<T>(value: unknown): value is Iterable<T> {
  * @private
  */
 function isArrayLike<T>(value: unknown): value is ArrayLike<T> {
-    if(value && typeof(value) === "object" &&
-        Number.isFinite(typeof((<any> value).length))
-    ) {
-        try {
-            (<any> value)[0];
-            return true;
-        }
-        catch(error) {
-            return false;
-        }
+    return !!(value && typeof(value) === "object" &&
+        Number.isFinite((<any> value).length)
+    );
+}
+
+/**
+ * Helper to reproduce index behavior of slice, indexOf, etc.
+ * @private
+ */
+function getStartIndex(length: number, index: number | undefined): number {
+    if(typeof(index) !== "number" || index !== index) {
+        return 0;
+    }
+    else if(index < 0) {
+        return Math.max(0, length + index);
     }
     else {
-        return false;
+        return index;
     }
 }
 
-// TODO: remove
-export type IterableArrayLike<T> = Iterable<T> & ArrayLike<T>;
-function isIterableArrayLike<T>(value: unknown): value is IterableArrayLike<T> {
-    return isArrayLike<T>(value) && (
-        typeof((<any> value)[Symbol.iterator]) === "function"
-    );
+/**
+ * Helper to reproduce index behavior of slice, lastIndexOf, etc.
+ * @private
+ */
+function getEndIndex(length: number, index: number | undefined): number {
+    if(typeof(index) !== "number" || index !== index) {
+        return length;
+    }
+    else if(index < 0) {
+        return length + index;
+    }
+    else {
+        return Math.min(length, index);
+    }
 }
 
 /**
@@ -117,8 +130,8 @@ export class SortedArray<T> extends Array<T> {
     /**
      * Construct a new SortedArray from the given items, which will
      * be sorted using the Array `sort` function.
-     * [(This is not guaranteed to be stable in all cases.)]
-     * (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability)
+     * This is not guaranteed to be stable in all cases. See:
+     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability
      * 
      * The SortedArray implementation assumes that any values `a` and `b`
      * for which `equalityFunc(a, b) === true`,
@@ -207,7 +220,6 @@ export class SortedArray<T> extends Array<T> {
             super.sort(compareFunc || SortedArrayDefaultComparatorFunction);
         }
         // new SortedArray(object with length, cmp?, eq?) - e.g. `arguments`
-        // TODO: ?
         else if(values && typeof(values) === "object" &&
             Number.isFinite(values.length)
         ) {
@@ -259,7 +271,7 @@ export class SortedArray<T> extends Array<T> {
      */
     static ofSorted<T>(...values: T[]): SortedArray<T> {
         const array = new SortedArray<T>();
-        Array.prototype.push.apply(array, values); // TODO: array.push?
+        Array.prototype.push.apply(array, values);
         return array;
     }
     
@@ -327,6 +339,8 @@ export class SortedArray<T> extends Array<T> {
     /**
      * Insert a value into the array, maintaining sort order.
      * 
+     * You probably want to use this method instead of `push`.
+     * 
      * @param value The value to insert into the array.
      * 
      * @returns the new length of the array.
@@ -388,7 +402,7 @@ export class SortedArray<T> extends Array<T> {
                 }
                 else {
                     Array.prototype.splice.call(
-                        this, firstInsertionIndex, 0, new Array(values.length)
+                        this, firstInsertionIndex, 0, ...(new Array(values.length))
                     );
                     for(let i: number = 0; i < values.length; i++) {
                         this[i + firstInsertionIndex] = values[i];
@@ -589,14 +603,8 @@ export class SortedArray<T> extends Array<T> {
         fromIndex?: number,
         endIndex?: number,
     ): number {
-        const from = (typeof(fromIndex) !== "number" || fromIndex !== fromIndex ?
-            0 : (fromIndex < 0 ? Math.max(0, this.length + fromIndex) : fromIndex)
-        );
-        const end = (typeof(endIndex) !== "number" || endIndex !== endIndex ?
-            this.length : (endIndex < 0 ? this.length + endIndex :
-                Math.min(this.length, endIndex)
-            )
-        );
+        const from = getStartIndex(this.length, fromIndex);
+        const end = getEndIndex(this.length, endIndex);
         let min = from - 1;
         let max = end;
         while(1 + min < max) {
@@ -631,14 +639,8 @@ export class SortedArray<T> extends Array<T> {
         fromIndex?: number,
         endIndex?: number,
     ): number {
-        const from = (typeof(fromIndex) !== "number" || fromIndex !== fromIndex ?
-            0 : (fromIndex < 0 ? Math.max(0, this.length + fromIndex) : fromIndex)
-        );
-        const end = (typeof(endIndex) !== "number" || endIndex !== endIndex ?
-            this.length : (endIndex < 0 ? this.length + endIndex :
-                Math.min(this.length, endIndex)
-            )
-        );
+        const from = getStartIndex(this.length, fromIndex);
+        const end = getEndIndex(this.length, endIndex);
         let min = from - 1;
         let max = end;
         while(1 + min < max) {
@@ -701,7 +703,8 @@ export class SortedArray<T> extends Array<T> {
         ) {
             return index;
         }
-        while(++index < this.length &&
+        const end = getEndIndex(this.length, endIndex);
+        while(++index < end &&
             this.compareFunc(value, this[index]) === 0
         ) {
             if(this.equalityFunc(this[index], value)) {
@@ -719,6 +722,11 @@ export class SortedArray<T> extends Array<T> {
      * which is {@link SortedArray.DefaultEqualityFunction} when not
      * otherwise specified.
      * 
+     * Note that the behavior of this method differs from the normal
+     * Array `lastIndexOf` method in that passing `undefined` explicitly
+     * as the `endIndex` argument is treated the same as omitting that
+     * argument, instead of coercing the value to `0`.
+     * 
      * @param value Find the last index of a value in the array that
      * is equal to this one.
      * @param endIndex Stop looking for items at this index.
@@ -728,7 +736,6 @@ export class SortedArray<T> extends Array<T> {
      * item was found.
      */
     lastIndexOf(value: T, endIndex?: number): number {
-        // TODO: tests, endIndex handling might be off by one
         return this.lastIndexOfRange(value, 0, endIndex);
     }
     
@@ -757,7 +764,8 @@ export class SortedArray<T> extends Array<T> {
         ) {
             return index;
         }
-        while(--index >= 0 &&
+        const from = getStartIndex(this.length, fromIndex);
+        while(--index >= from &&
             this.compareFunc(value, this[index]) === 0
         ) {
             if(this.equalityFunc(this[index], value)) {
@@ -865,8 +873,8 @@ export class SortedArray<T> extends Array<T> {
      * Re-sort the list and assign a new comparator function.
      * 
      * The array items will be sorted using the Array `sort` function.
-     * [(This is not guaranteed to be stable in all cases.)]
-     * (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability)
+     * This is not guaranteed to be stable in all cases. See:
+     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability
      * 
      * @param compareFunc The new comparator function to use for
      * this SortedArray.
@@ -930,9 +938,18 @@ export class SortedArray<T> extends Array<T> {
         return splice;
     }
     
-    // TODO: Can these be done in a less hacky way?
-    
-    /* TODO: ?
+    /**
+     * Get a new array with the values in this array concatenated with
+     * any number of other arrays.
+     * 
+     * This method is overridden to ensure that a normal Array is returned,
+     * instead of a SortedArray. It does not otherwise change the method's
+     * behavior.
+     * 
+     * @param items Arrays to concatenate.
+     * 
+     * @returns a new array containing the concatenated items.
+     */
     concat(...items: (T | ConcatArray<T>)[]): T[] {
         (<any> this).constructor = Array;
         // @ts-ignore
@@ -941,6 +958,19 @@ export class SortedArray<T> extends Array<T> {
         return <T[]> array;
     }
     
+    /**
+     * Get a new array with sub-array items concatenated into it
+     * recursively, up to the specified depth.
+     * 
+     * This method is overridden to ensure that a normal Array is returned,
+     * instead of a SortedArray. It does not otherwise change the method's
+     * behavior.
+     * 
+     * @param depth How deep a nested array structure should be flattened.
+     * Defaults to `1`.
+     * 
+     * @returns a new array containing the flattened items.
+     */
     flat<This, Depth extends number = 1>(
         this: This,
         depth?: Depth,
@@ -952,6 +982,22 @@ export class SortedArray<T> extends Array<T> {
         return <FlatArray<This, Depth>[]> array;
     }
     
+    /**
+     * Get a new array formed by applying a given transformation callback
+     * function to each item in the array, and then flattening the result
+     * by one level.
+     * 
+     * This method is overridden to ensure that a normal Array is returned,
+     * instead of a SortedArray. It does not otherwise change the method's
+     * behavior.
+     * 
+     * @param transform A transformation callback function to be invoked
+     * for each item in the array. It should return an array containing new
+     * items for the new array, or a single non-array value to be added to
+     * the new array.
+     * 
+     * @returns a new array containing the mapped and flattened items.
+     */
     // @ts-ignore
     flatMap<U, This = undefined>(
         transform: SortedArrayElementCallback<This, T, U | ReadonlyArray<U>>,
@@ -964,6 +1010,21 @@ export class SortedArray<T> extends Array<T> {
         return <U[]> array;
     }
     
+    /**
+     * Get a new array populated with the results of calling a transformation
+     * callback function on every item in this array.
+     * 
+     * This method is overridden to ensure that a normal Array is returned,
+     * instead of a SortedArray. It does not otherwise change the method's
+     * behavior.
+     * 
+     * @param transform A transformation callback function to be invoked
+     * for each item in the array. Its return value is added as a single
+     * item in the new array.
+     * 
+     * @returns a new array containing the values returned by calls to
+     * the transformation function.
+     */
     // @ts-ignore
     map<U, This = undefined>(
         transform: SortedArrayElementCallback<This, T, U>,
@@ -975,7 +1036,6 @@ export class SortedArray<T> extends Array<T> {
         (<any> this).constructor = SortedArray;
         return <U[]> array;
     }
-    */
 }
 
 export namespace SortedArray {
