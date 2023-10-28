@@ -110,17 +110,17 @@ canary.group("construction", function() {
         const array = new SortedArray({length: 3, 0: 1, 1: 2, 2: 3});
         assertArray(array, [1, 2, 3]);
     });
-    this.test("values from other SortedList", function() {
+    this.test("values from other SortedArray", function() {
         const a = new SortedArray([1, 2, 3, 4]);
         assertArray(new SortedArray(a), [1, 2, 3, 4]);
         assertArray(new SortedArray(a, (a, b) => b - a), [4, 3, 2, 1]);
         // Verify that elements are not reordered when the comparator
         // for the old and new SortedArray are identical.
         // You should not actually use SortedArray like this!
-        const b = SortedArray.ofSorted(3, 1, 2);
-        assertArray(new SortedArray(b), [3, 1, 2]);
+        const dont = SortedArray.ofSorted(3, 1, 2);
+        assertArray(new SortedArray(dont), [3, 1, 2]);
     });
-    this.test("values from SortedList with equality function", function() {
+    this.test("values from SortedArray with equality function", function() {
         const cmp = (a: any, b: any) => +a - +b;
         const original = new SortedArray([1, 3, "2", "4"],
             cmp, (a, b) => a == b
