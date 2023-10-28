@@ -1,4 +1,4 @@
-name: Run SortedArray tests
+name: SortedArray Tests
 run-name: ${{ github.actor }} is running SortedArray tests
 on:
   push:
